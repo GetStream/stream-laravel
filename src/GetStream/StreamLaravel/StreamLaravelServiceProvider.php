@@ -28,7 +28,13 @@ class StreamLaravelServiceProvider extends ServiceProvider {
 	 */
 	public function register()
 	{
-		//
+		$this->app['feed_manager'] = $this->app->share(function($app)
+        {
+        	$manager_class = $app['config']->get('stream-laravel::feed_manager_class');
+        	$api_key = $app['config']->get('stream-laravel::api_key');
+        	$api_secret = $app['config']->get('stream-laravel::api_secret');
+            return new $manager_class($api_key, $api_secret, $app['config']);
+        });
 	}
 
 	/**

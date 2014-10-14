@@ -1,1 +1,0 @@
-<?php namespace GetStream\StreamLaravel;
