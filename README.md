@@ -43,7 +43,6 @@ Add ```'GetStream\StreamLaravel\StreamLaravelServiceProvider'``` to the list of 
         'GetStream\StreamLaravel\StreamLaravelServiceProvider',
         ...
     ),
-
 ```
 
 Add FeedManager facade ```'GetStream\StreamLaravel\Facades\FeedManager'``` to list of aliases in ```conf/app.php```
@@ -53,7 +52,6 @@ Add FeedManager facade ```'GetStream\StreamLaravel\Facades\FeedManager'``` to li
         'FeedManager'       => 'GetStream\StreamLaravel\Facades\FeedManager',
         ...
     ),
-
 ```
 
 Publish the configuration file
@@ -107,7 +105,6 @@ class Pin extends GetStream\StreamLaravel\Eloquent\Activity {
     {
         return 'author';
     }
-
 ```
 
 ####Activity extra data
@@ -123,7 +120,6 @@ class Pin extends GetStream\StreamLaravel\Eloquent\Activity {
     {
         return array('is_retweet'=>$this->is_retweet);
     }
-
 ```
 
 
@@ -171,7 +167,6 @@ class Tweet extends GetStream\StreamLaravel\Eloquent\Activity {
             return array($targetFeed);
         }
     }
-
 ```
 
 Another example would be following a user. You would commonly want to notify the user which is being followed.
@@ -189,7 +184,6 @@ class Follow extends GetStream\StreamLaravel\Eloquent\Activity {
         $targetFeed = FeedManager::getNotificationFeed($this->target->id);
         return array($targetFeed);
     }
-
 ```
 
 
@@ -198,7 +192,6 @@ The create the newsfeeds you need to notify the system about follow relationship
 
 ```
 FeedManager::followUser($userId, $targetId);
-
 ```
 
 ### Showing the newsfeed
@@ -231,7 +224,6 @@ Now that you've enriched the activities you can render them in a view.
 For convenience we includes a basic view:
 
 ```
-
 @section('content')
     <div class="container">
         <div class="container-pins">
@@ -241,7 +233,6 @@ For convenience we includes a basic view:
         </div>
     </div>
 @stop
-
 ```
 
 The ```stream-laravel::render_activity``` view tag will render the view activity.$activity["verb"] view with the activity as context.
@@ -265,7 +256,6 @@ Sometimes you'll want to customize how enrichment works. The documentation will 
 If you store references to model instances in the activity extra_data you can use the Enrich class to take care of it for you
 
 ```
-
 use \Illuminate\Database\Eloquent\Model;
 use GetStream\StreamLaravel\Enrich;
 
@@ -281,7 +271,6 @@ class Pin extends GetStream\StreamLaravel\Eloquent\Activity {
 $enricher = new Enrich(array('actor', 'object', 'parent_tweet'));
 $activities = $feed->getActivities(0,25)['results'];
 $activities = $enricher->enrichActivities($activities);
-
 ```
 
 ####Preload related data
@@ -295,7 +284,6 @@ class Pin extends GetStream\StreamLaravel\Eloquent\Activity {
     {
         return array('user');
     }
-
 ```
 
 ###Low level APIs access
@@ -304,8 +292,6 @@ The full explanation can be found in the [getstream.io documentation](https://ge
 
 
 ```
-
 $specialFeed = Feed::client->feed('special:42')
 $specialFeed->follow('flat:60')
-
 ```
