@@ -1,12 +1,13 @@
 <?php
 
-namespace GetStream\StreamLaravel;
+use GetStream\StreamLaravel\StreamLaravelManager;
 use Mockery as m;
 
 class ManagerTest extends \PHPUnit_Framework_TestCase
 {
 
     public function setUp(){
+        parent::setUp();
         $config = m::mock('ConfigMock');
         $config->shouldReceive('get')->once()->with('stream-laravel::user_feed')
             ->andReturn('user');
