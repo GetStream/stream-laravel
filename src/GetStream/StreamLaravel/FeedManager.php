@@ -9,7 +9,11 @@ class StreamLaravelManager {
 
     public function __construct($api_key, $api_secret, $config)
     {
-        $this->client = new Client($api_key, $api_secret);
+        if (getenv('STREAM_URL') !== false) {
+            $this->client = Client::herokuConnect(getenv('STREAM_URL'));
+        } else {
+            $this->client = new Client($api_key, $api_secret);
+        }
         $this->config = $config;
         $this->userFeed = $this->config->get("stream-laravel::user_feed");
     }
