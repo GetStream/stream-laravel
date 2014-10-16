@@ -7,6 +7,8 @@ This package helps you create activity streams & newsfeeds with Laravel and [Get
 
 ![](https://dvqg2dogggmn6.cloudfront.net/images/mood-home.png)
 
+You can build:
+
 * Activity streams such as seen on Github
 * A twitter style newsfeed
 * A feed like instagram/ pinterest
