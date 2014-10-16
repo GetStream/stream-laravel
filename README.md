@@ -70,8 +70,9 @@ For example:
 
 ```php
 
-class Pin extends GetStream\StreamLaravel\Eloquent\Activity {
-    ...
+class Pin extends Eloquent {
+    use GetStream\StreamLaravel\Eloquent\ActivityTrait;
+
 ```
 
 Everytime a Pin is created it will be stored in the feed of the user that created it, and when a Pin instance is deleted than it will get removed as well.
@@ -94,7 +95,8 @@ You can change how a model instance is stored as activity by implementing specif
 Below shows an example how to change your class if the model belongs to an author instead of to a user.
 
 ```php
-class Pin extends GetStream\StreamLaravel\Eloquent\Activity {
+class Pin extends Eloquent {
+    use GetStream\StreamLaravel\Eloquent\ActivityTrait;
 
     public function author()
     {
@@ -114,7 +116,8 @@ Often you'll want to store more data than just the basic fields. You achieve thi
 NOTE: you should only return data that can be serialized by PHP's json_encode function
 
 ```php
-class Pin extends GetStream\StreamLaravel\Eloquent\Activity {
+class Pin extends Eloquent {
+    use GetStream\StreamLaravel\Eloquent\ActivityTrait;
 
     public function activityExtraData()
     {
@@ -158,7 +161,8 @@ notification_feed = FeedManager::getNotificationFeed($user->id);
 By default the notification feed will be empty. You can specify which users to notify when your model gets created. In the case of a retweet you probably want to notify the user of the parent tweet.
 
 ```php
-class Tweet extends GetStream\StreamLaravel\Eloquent\Activity {
+class Tweet extends Eloquent {
+    use GetStream\StreamLaravel\Eloquent\ActivityTrait;
 
     public function activityNotify()
     {
@@ -172,7 +176,8 @@ class Tweet extends GetStream\StreamLaravel\Eloquent\Activity {
 Another example would be following a user. You would commonly want to notify the user which is being followed.
 
 ```php
-class Follow extends GetStream\StreamLaravel\Eloquent\Activity {
+class Follow extends Eloquent {
+    use GetStream\StreamLaravel\Eloquent\ActivityTrait;
 
     public function target()
     {
@@ -259,7 +264,8 @@ If you store references to model instances in the activity extra_data you can us
 use \Illuminate\Database\Eloquent\Model;
 use GetStream\StreamLaravel\Enrich;
 
-class Pin extends GetStream\StreamLaravel\Eloquent\Activity {
+class Pin extends Eloquent {
+    use GetStream\StreamLaravel\Eloquent\ActivityTrait;
 
     public function activityExtraData()
     {
@@ -278,7 +284,8 @@ $activities = $enricher->enrichActivities($activities);
 You will commonly access related objects such as activity['object']->user. To prevent your newsfeed to run N queries you can instruct the manager to load related objects. The manager will use Eloquent's ```With``` functionality.
 
 ```
-class Pin extends GetStream\StreamLaravel\Eloquent\Activity {
+class Pin extends Eloquent {
+    use GetStream\StreamLaravel\Eloquent\ActivityTrait;
 
     public function activityLazyLoading()
     {
