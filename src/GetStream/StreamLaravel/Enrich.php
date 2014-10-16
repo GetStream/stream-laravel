@@ -1,5 +1,7 @@
 <?php namespace GetStream\StreamLaravel;
 
+use GetStream\StreamLaravel\Exceptions;
+
 class Enrich {
 
     private $fields = array();
@@ -48,7 +50,9 @@ class Enrich {
             }
             $fetched = $this->fromDb($content_type_model, array_keys($content_ids), $with);
             if (count($fetched) < count(array_keys($content_ids))) {
-                throw new Exception('Some data in this feed is not in the database!');
+                $missing_ids = array_values(array_diff(array_keys($content_ids), array_keys($fetched)));
+                $pretty_ids = var_export($missing_ids, true);
+                throw new MissingDataException("Some data in this feed is not in the database: model: {$content_type} ids:{$pretty_ids}");
             }
             $objects[$content_type] = $fetched;
         }
