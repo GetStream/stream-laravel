@@ -1,6 +1,6 @@
 <?php namespace GetStream\StreamLaravel;
 
-use GetStream\StreamLaravel\Exceptions;
+use GetStream\StreamLaravel\Exceptions\MissingDataException;
 
 class Enrich {
 
