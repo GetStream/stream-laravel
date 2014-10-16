@@ -3,7 +3,7 @@
 
 This package helps you create activity streams & newsfeeds with Laravel and [GetStream.io](https://getstream.io).
 
-###What can you build?
+###Build activity stream & news feeds
 
 ![](https://dvqg2dogggmn6.cloudfront.net/images/mood-home.png)
 
