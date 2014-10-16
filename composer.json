@@ -1,6 +1,8 @@
 {
     "name": "get-stream/stream-laravel",
-    "description": "",
+    "description": "Build newsfeeds and activity feeds on Laravel using getstream.io",
+    "homepage": "https://getstream.io/",
+    "keywords": ["getstream", "activity", "newsfeed", "activity feed", "notification feed", "aggregated feed"],
     "authors": [
         {
             "name": "Tommaso Barbugli",
