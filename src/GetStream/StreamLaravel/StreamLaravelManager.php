@@ -20,13 +20,13 @@ class StreamLaravelManager {
 
     public function getUserFeed($user_id)
     {
-        return $this->client->feed("$this->userFeed:$user_id");
+        return $this->client->feed($this->userFeed, $user_id);
     }
 
     public function getNotificationFeed($user_id)
     {
         $user_feed = $this->config->get("stream-laravel::notification_feed");
-        return $this->client->feed("$user_feed:$user_id");
+        return $this->client->feed($user_feed, $user_id);
     }
 
     public function getNewsFeeds($user_id)
@@ -34,7 +34,7 @@ class StreamLaravelManager {
         $feeds = array();
         $news_feeds = $this->config->get("stream-laravel::news_feeds");
         foreach ($news_feeds as $feed) {
-            $feeds[$feed] = $this->client->feed("$feed:$user_id");
+            $feeds[$feed] = $this->client->feed($feed, $user_id);
         }
         return $feeds;
     }
@@ -59,7 +59,7 @@ class StreamLaravelManager {
 
     public function getFeed($feed, $user_id)
     {
-        return $this->client->feed("$feed:$user_id");
+        return $this->client->feed($feed, $user_id);
     }
 
     public function activityCreated($instance)
