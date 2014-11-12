@@ -44,7 +44,7 @@ class StreamLaravelManager {
         $news_feeds = $this->getNewsFeeds($user_id);
         $target_feed = $this->getUserFeed($target_user_id);
         foreach ($news_feeds as $feed) {
-            $feed->followFeed($target_feed->getId());
+            $feed->followFeed($target_feed->slug, $target_feed->user_id);
         }
     }
 
@@ -53,7 +53,7 @@ class StreamLaravelManager {
         $news_feeds = $this->getNewsFeeds($user_id);
         $target_feed = $this->getUserFeed($target_user_id);
         foreach ($news_feeds as $feed) {
-            $feed->unfollowFeed($target_feed->getId());
+            $feed->unfollowFeed($target_feed->slug, $target_feed->user_id);
         }
     }
 
