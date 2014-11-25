@@ -15,7 +15,8 @@ class Enrich {
     public function fromDb($model, $ids, $with=array())
     {
         $results = array();
-        $query = $model::with($with)->whereIn('id', $ids);
+        $pkName = (new $model())->getKeyName();
+        $query = $model::with($with)->whereIn($pkName, $ids);
         if (property_exists($model, 'withTrashed') && $this->withTrashed)
             $query = $query->withTrashed();
         $objects = $query->get();
