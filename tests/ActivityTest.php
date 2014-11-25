@@ -9,6 +9,10 @@ class _Activity extends Activity
     public $author = null;
     public $created_at = null;
     public $id = 42;
+    public function getKey()
+    {
+        return $this->id;
+    }
     public function activityActorMethodName()
     {
         return 'author';
