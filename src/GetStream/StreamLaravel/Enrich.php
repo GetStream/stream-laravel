@@ -17,11 +17,11 @@ class Enrich {
         $results = array();
         $pkName = (new $model())->getKeyName();
         $query = $model::with($with)->whereIn($pkName, $ids);
-        if (property_exists($model, 'withTrashed') && $this->withTrashed)
+        if (in_array('Illuminate\Database\Eloquent\SoftDeletingTrait', class_uses(get_class($model))) && $this->withTrashed) // previous withTrash method deprecated in Laravel 4.2
             $query = $query->withTrashed();
         $objects = $query->get();
         foreach ($objects as $object) {
-            $results[$object->id] = $object;
+            $results[$object->getKey()] = $object; // support for non-default UUID keys
         }
         return $results;
     }
