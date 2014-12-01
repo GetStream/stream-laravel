@@ -5,16 +5,6 @@ trait ActivityTrait {
     protected static $activitySyncPolicy = '\GetStream\StreamLaravel\Eloquent\CreateRemoveObserver';
 
     /**
-     * The name of the feed type where models activities should be stored
-     * leave it empty to default to global user feed
-     * @return string
-     */
-    public function activityAuthorFeed()
-    {
-        return null;
-    }
-
-    /**
      * Returns an array of relations as strings or functions that tell the enrich
      * class which (and how) related models should be loaded. By default the result
      * of this is passed directly to Eloquent's query With lazy loader method
@@ -126,7 +116,7 @@ trait ActivityTrait {
         if ($to !== null){
             $activity['to'] = array();
             foreach ($to as $feed) {
-                $activity['to'][] = $to->getId();
+                $activity['to'][] = $feed->getId();
             }
         }
 

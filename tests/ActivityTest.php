@@ -2,6 +2,7 @@
 
 use GetStream\StreamLaravel\StreamLaravelManager;
 use GetStream\StreamLaravel\Eloquent\Activity;
+use GetStream\Stream\Feed;
 use Mockery as m;
 
 class _Activity extends Activity
@@ -16,6 +17,10 @@ class _Activity extends Activity
     public function activityActorMethodName()
     {
         return 'author';
+    }
+    public function activityNotify()
+    {
+        return array(new Feed(null, 'feed', '1', 'token', null));
     }
 }
 
@@ -37,5 +42,11 @@ class ActivityTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($activity['actor'], '_Activity:43');
         $this->assertSame($activity['object'], '_Activity:42');
         $this->assertSame($activity['foreign_id'], '_Activity:42');
+    }
+    public function testToField()
+    {
+        $activity = $this->instance->createActivity();
+        print_r($activity['to']);
+        $this->assertSame($activity['to'], array('feed:1'));
     }
 }
