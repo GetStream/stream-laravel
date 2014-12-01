@@ -126,7 +126,7 @@ trait ActivityTrait {
         if ($to !== null){
             $activity['to'] = array();
             foreach ($to as $feed) {
-                $activity['to'][] = $to->getId();
+                $activity['to'][] = $feed->getId();
             }
         }
 
