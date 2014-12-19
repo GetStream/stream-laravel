@@ -13,6 +13,8 @@ class ManagerTest extends \PHPUnit_Framework_TestCase
             ->andReturn('user');
         $config->shouldReceive('get')->once()->with('stream-laravel::notification_feed')
             ->andReturn('notification');
+        $config->shouldReceive('get')->once()->with('stream-laravel::location')
+            ->andReturn('');
         $config->shouldReceive('get')->once()->with('stream-laravel::news_feeds')
             ->andReturn(array('flat'=>'flat', 'aggregated'=>'aggregated'));
         $this->manager = new StreamLaravelManager('key', 'secret', $config);

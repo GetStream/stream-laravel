@@ -13,6 +13,8 @@ class StreamLaravelManager {
             $this->client = Client::herokuConnect(getenv('STREAM_URL'));
         } else {
             $this->client = new Client($api_key, $api_secret);
+            $location = $this->config->get("stream-laravel::location");
+            $this->client->setLocation($location);
         }
         $this->config = $config;
         $this->userFeed = $this->config->get("stream-laravel::user_feed");

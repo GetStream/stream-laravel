@@ -12,7 +12,7 @@ return array(
     'api_key' => '',
     'api_secret' => '',
     'api_app_id' => '',
-
+    'location' => '',
     /*
     |-----------------------------------------------------------------------------
     | The default feed manager class
