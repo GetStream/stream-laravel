@@ -9,6 +9,7 @@ class StreamLaravelManager {
 
     public function __construct($api_key, $api_secret, $config)
     {
+        $this->config = $config;
         if (getenv('STREAM_URL') !== false) {
             $this->client = Client::herokuConnect(getenv('STREAM_URL'));
         } else {
@@ -16,7 +17,6 @@ class StreamLaravelManager {
             $location = $this->config->get("stream-laravel::location");
             $this->client->setLocation($location);
         }
-        $this->config = $config;
         $this->userFeed = $this->config->get("stream-laravel::user_feed");
     }
 
