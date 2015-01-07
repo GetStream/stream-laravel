@@ -64,6 +64,16 @@ php artisan config:publish get-stream/stream-laravel
 
 Login with Github on getstream.io and set ```api_key``` and ```api_secret``` in the stream-laravel config file as their are shown in your dashboard.
 
+for example:
+```php
+return array(
+    'api_key' => 'API_KEY',
+    'api_secret' => 'API_SECRET',
+    'api_app_id' => 'API_APP_ID',
+    'location' => 'us-east'
+)
+```
+
 ###Eloquent integration
 
 Stream laravel instant integration with Eloquent models;extending the ```GetStream\StreamLaravel\Eloquent\Activity``` class will give you automatic tracking of your models to user feeds. 
