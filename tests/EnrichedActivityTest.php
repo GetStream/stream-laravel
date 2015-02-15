@@ -30,4 +30,14 @@ class EnrichedActivityTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($activity->getNotEnrichedData(), array('missing' => 'value'));
     }
 
+    public function testIterable()
+    {
+        $activity = new EnrichedActivity(array('1'=>1, '2'=> 3));
+        $sum = 0;
+        foreach ($activity as $field => $value) {
+            $sum += $value;
+        }
+        $this->assertSame($sum, 4);
+    }
+
 }

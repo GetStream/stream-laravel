@@ -1,6 +1,6 @@
 <?php namespace GetStream\StreamLaravel;
 
-class EnrichedActivity implements \ArrayAccess {
+class EnrichedActivity implements \ArrayAccess, \Iterator {
     private $activityData = array();
     private $notEnrichedData = array();
 
@@ -47,6 +47,32 @@ class EnrichedActivity implements \ArrayAccess {
     public function offsetGet($offset)
     {
         return isset($this->activityData[$offset]) ? $this->activityData[$offset] : null;
+    }
+
+    // Array iteration methods
+    public function rewind()
+    {
+        reset($this->activityData);
+    }
+  
+    public function current()
+    {
+        return current($this->activityData);
+    }
+  
+    public function key() 
+    {
+        return key($this->activityData);
+    }
+  
+    public function next() 
+    {
+        return next($this->activityData);
+    }
+  
+    public function valid()
+    {
+        return (bool) $this->current();
     }
 
 }
