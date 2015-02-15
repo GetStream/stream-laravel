@@ -1,5 +1,6 @@
 <?php namespace GetStream\StreamLaravel;
 
+use GetStream\StreamLaravel\EnrichedActivity;
 use GetStream\StreamLaravel\Exceptions\MissingDataException;
 
 class Enrich {
@@ -60,6 +61,15 @@ class Enrich {
         return $objects;
     }
 
+    private function wrapActivities($activities)
+    {
+        $wrappedActivities = array();
+        foreach ($activities as $i => $activity) {
+            $wrappedActivities[] = new EnrichedActivity($activity);
+        }
+        return $wrappedActivities;
+    }
+
     private function injectObjects(&$activities, $objects)
     {
         foreach ($activities as $key => $activity) {
@@ -69,8 +79,10 @@ class Enrich {
                 $value = $activity[$field];
                 $reference = explode(':', $value);
                 if (!array_key_exists($reference[0], $objects))
+                    $activity->trackNotEnrichedField($reference[0], $reference[1]);
                     continue;
                 if (!array_key_exists($reference[1], $objects[$reference[0]]))
+                    $activity->trackNotEnrichedField($reference[0], $reference[1]);
                     continue;
                 $activities[$key][$field] = $objects[$reference[0]][$reference[1]];
             }
@@ -80,6 +92,8 @@ class Enrich {
 
     public function enrichActivities($activities)
     {
+        $activities = $this->wrapActivities($activities);
+
         if (count($activities) === 0) {
             return $activities;
         }
@@ -92,6 +106,10 @@ class Enrich {
 
     public function enrichAggregatedActivities($aggregatedActivities)
     {
+        foreach ($aggregatedActivities as $i => $aggregated) {
+            $aggregated['activities'] = $this->wrapActivities($aggregated['activities']);
+        }
+
         if (count($aggregatedActivities) === 0) {
             return $aggregatedActivities;
         }
