@@ -104,7 +104,7 @@ class Enrich {
     public function enrichAggregatedActivities($aggregatedActivities)
     {
         foreach ($aggregatedActivities as $i => $aggregated) {
-            $aggregated['activities'] = $this->wrapActivities($aggregated['activities']);
+            $aggregatedActivities[$i]['activities'] = $this->wrapActivities($aggregated['activities']);
         }
 
         if (count($aggregatedActivities) === 0) {

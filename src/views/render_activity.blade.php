@@ -1,4 +1,4 @@
-@if ($activity->enriched())
+@if (is_array($activity) || $activity->enriched())
     @if (isset($prefix))
         @if (array_key_exists('activities', $activity))
             @include("aggregated_activity.{$prefix}_{$activity['verb']}", array('activity'=>$activity))
