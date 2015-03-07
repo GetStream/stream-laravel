@@ -36,15 +36,15 @@ class StreamLaravelServiceProvider extends ServiceProvider {
 	public function register()
 	{
 		$this->mergeConfigFrom(
-			__DIR__.'/../../config/config.php', 'getstream'
+			__DIR__.'/../../config/config.php', 'stream-laravel'
 		);
 
 		$this->app['feed_manager'] = $this->app->share(function($app)
         {
 
-        	$manager_class = config('getstream.feed_manager_class');
-        	$api_key = config('getstream.api_key');
-        	$api_secret = config('getstream.api_secret');
+        	$manager_class = config('stream-laravel.feed_manager_class');
+        	$api_key = config('stream-laravel.api_key');
+        	$api_secret = config('stream-laravel.api_secret');
 
             return new $manager_class($api_key, $api_secret, $app['config']);
         });
