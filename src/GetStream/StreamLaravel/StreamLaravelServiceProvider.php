@@ -23,7 +23,7 @@ class StreamLaravelServiceProvider extends ServiceProvider {
 		$this->loadViewsFrom(__DIR__.'/../../views', 'stream-laravel');
 
 		$this->publishes([
-		    __DIR__.'/../../config/config.php' => config_path('getstream.php'),
+		    __DIR__.'/../../config/config.php' => config_path('stream-laravel.php'),
 		    __DIR__.'/../../views' => base_path('resources/views/vendor/stream-laravel'),
 		]);
 	}
@@ -35,19 +35,41 @@ class StreamLaravelServiceProvider extends ServiceProvider {
 	 */
 	public function register()
 	{
-		$this->mergeConfigFrom(
-			__DIR__.'/../../config/config.php', 'stream-laravel'
-		);
+
+		$this->registerResources();
 
 		$this->app['feed_manager'] = $this->app->share(function($app)
         {
 
-        	$manager_class = config('stream-laravel.feed_manager_class');
-        	$api_key = config('stream-laravel.api_key');
-        	$api_secret = config('stream-laravel.api_secret');
+        	$manager_class = $app['config']->get('stream-laravel::feed_manager_class');
+        	$api_key = $app['config']->get('stream-laravel::api_key');
+        	$api_secret = $app['config']->get('stream-laravel::api_secret');
 
-            return new $manager_class($api_key, $api_secret, $app['config']);
+            return new $manager_class($api_key, $api_secret, $this->app['config']);
         });
+	}
+
+	/**
+	 * Register the package resources.
+	 *
+	 * @return void
+	 */
+	protected function registerResources()
+	{
+	    $userConfigFile    = app()->configPath().'/stream-laravel.php';
+	    $packageConfigFile = __DIR__.'/../../config/config.php';
+	    $config            = $this->app['files']->getRequire($packageConfigFile);
+
+	    if (file_exists($userConfigFile)) {
+	        $userConfig = $this->app['files']->getRequire($userConfigFile);
+	        $config     = array_replace_recursive($config, $userConfig);
+	    }
+
+	    $namespace = 'stream-laravel::';
+
+	    foreach($config as $key => $value) {
+	    	$this->app['config']->set($namespace . $key , $value);
+	    }
 	}
 
 	/**
