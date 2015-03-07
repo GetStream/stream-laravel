@@ -18,7 +18,14 @@ class StreamLaravelServiceProvider extends ServiceProvider {
 	 */
 	public function boot()
 	{
-		$this->package('get-stream/stream-laravel');
+		// $this->registerResources();
+
+		$this->loadViewsFrom(__DIR__.'/../../views', 'stream-laravel');
+
+		$this->publishes([
+		    __DIR__.'/../../config/config.php' => config_path('getstream.php'),
+		    __DIR__.'/../../views' => base_path('resources/views/vendor/stream-laravel'),
+		]);
 	}
 
 	/**
@@ -28,11 +35,17 @@ class StreamLaravelServiceProvider extends ServiceProvider {
 	 */
 	public function register()
 	{
+		$this->mergeConfigFrom(
+			__DIR__.'/../../config/config.php', 'getstream'
+		);
+
 		$this->app['feed_manager'] = $this->app->share(function($app)
         {
-        	$manager_class = $app['config']->get('stream-laravel::feed_manager_class');
-        	$api_key = $app['config']->get('stream-laravel::api_key');
-        	$api_secret = $app['config']->get('stream-laravel::api_secret');
+
+        	$manager_class = config('getstream.feed_manager_class');
+        	$api_key = config('getstream.api_key');
+        	$api_secret = config('getstream.api_secret');
+
             return new $manager_class($api_key, $api_secret, $app['config']);
         });
 	}

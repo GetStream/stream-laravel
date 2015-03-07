@@ -1,6 +1,6 @@
 <?php
 
-return array(
+return [
 
     /*
     |-----------------------------------------------------------------------------
@@ -46,4 +46,4 @@ return array(
         'flat' => 'flat',
         'aggregated' => 'aggregated',
     )
-);
+];
