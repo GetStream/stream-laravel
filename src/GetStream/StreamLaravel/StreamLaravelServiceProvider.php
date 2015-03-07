@@ -18,14 +18,16 @@ class StreamLaravelServiceProvider extends ServiceProvider {
 	 */
 	public function boot()
 	{
-		// $this->registerResources();
+		if (method_exists($this, 'publishes')) {
+			$this->loadViewsFrom(__DIR__.'/../../views', 'stream-laravel');
 
-		$this->loadViewsFrom(__DIR__.'/../../views', 'stream-laravel');
-
-		$this->publishes([
-		    __DIR__.'/../../config/config.php' => config_path('stream-laravel.php'),
-		    __DIR__.'/../../views' => base_path('resources/views/vendor/stream-laravel'),
-		]);
+			$this->publishes([
+			    __DIR__.'/../../config/config.php' => config_path('stream-laravel.php'),
+			    __DIR__.'/../../views' => base_path('resources/views/vendor/stream-laravel'),
+			]);
+		} else {
+			$this->package('get-stream/stream-laravel');
+		}
 	}
 
 	/**
@@ -36,7 +38,9 @@ class StreamLaravelServiceProvider extends ServiceProvider {
 	public function register()
 	{
 
-		$this->registerResources();
+		if (method_exists($this, 'publishes')) {
+			$this->registerResources();
+		}
 
 		$this->app['feed_manager'] = $this->app->share(function($app)
         {
