@@ -15,6 +15,6 @@ before_script:
   - travis_retry composer require laravel/framework:${LARAVEL_VERSION} --no-update
   - travis_retry composer require illuminate/support:${LARAVEL_VERSION} --no-update
   - travis_retry composer require illuminate/database:${LARAVEL_VERSION} --no-update
-  - travis_retry composer install --prefer-source --no-interaction --dev
+  - travis_retry composer install --prefer-source --no-interaction
 
 script: phpunit
