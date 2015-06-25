@@ -311,6 +311,6 @@ The full explanation can be found in the [getstream.io documentation](https://ge
 
 
 ```
-$specialFeed = Feed::client->feed('special:42')
-$specialFeed->follow('flat:60')
+$specialFeed = FeedManager->getClient->feed('special', '42')
+$specialFeed->followFeed('flat', '60')
 ```

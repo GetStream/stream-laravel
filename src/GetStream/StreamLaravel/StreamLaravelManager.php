@@ -59,6 +59,11 @@ class StreamLaravelManager {
         }
     }
 
+    public function getClient()
+    {
+        return $this->client;
+    }
+
     public function getFeed($feed, $user_id)
     {
         return $this->client->feed($feed, $user_id);
