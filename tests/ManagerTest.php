@@ -17,8 +17,35 @@ class ManagerTest extends \PHPUnit_Framework_TestCase
             ->andReturn('');
         $config->shouldReceive('get')->once()->with('stream-laravel::news_feeds')
             ->andReturn(array('flat'=>'flat', 'aggregated'=>'aggregated'));
+        $config->shouldReceive('get')->once()->with('stream-laravel::timeout', 3)
+            ->andReturn(3);
         $this->manager = new StreamLaravelManager('key', 'secret', $config);
     }
+
+    public function testDefaultTimeout(){
+        $client = $this->manager->getClient();
+        $this->assertSame($client->timeout, 3);
+    }
+
+    public function testCustomTimeout(){
+        parent::setUp();
+        $config = m::mock('ConfigMock');
+        $config->shouldReceive('get')->once()->with('stream-laravel::user_feed')
+            ->andReturn('user');
+        $config->shouldReceive('get')->once()->with('stream-laravel::notification_feed')
+            ->andReturn('notification');
+        $config->shouldReceive('get')->once()->with('stream-laravel::location')
+            ->andReturn('');
+        $config->shouldReceive('get')->once()->with('stream-laravel::news_feeds')
+            ->andReturn(array('flat'=>'flat', 'aggregated'=>'aggregated'));
+        $config->shouldReceive('get')->once()->with('stream-laravel::timeout', 3)
+            ->andReturn(6);
+        $manager = new StreamLaravelManager('key', 'secret', $config);
+
+        $client = $manager->getClient();
+        $this->assertSame($client->timeout, 6);
+    }
+
 
     public function testGetUserFeed(){
         $feed = $this->manager->getUserFeed(42);
