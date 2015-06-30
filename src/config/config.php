@@ -13,6 +13,7 @@ return [
     'api_secret' => '',
     'api_app_id' => '',
     'location' => '',
+    'timeout' => 3,
     /*
     |-----------------------------------------------------------------------------
     | The default feed manager class
