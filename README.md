@@ -59,7 +59,7 @@ Add FeedManager facade ```'GetStream\StreamLaravel\Facades\FeedManager'``` to li
 Publish the configuration file
 
 ```
-php artisan config:publish get-stream/stream-laravel
+php artisan vendor:publish --provider="GetStream\StreamLaravel\StreamLaravelServiceProvider"
 ```
 
 Login with Github on getstream.io and set ```api_key``` and ```api_secret``` in the stream-laravel config file as their are shown in your dashboard.
