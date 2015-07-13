@@ -14,7 +14,7 @@
         "php": ">=5.4.0",
         "illuminate/support": ">=4.2",
         "illuminate/database": ">=4.2",
-        "get-stream/stream": "dev-master"
+        "get-stream/stream": "~2.1"
     },
     "require-dev": {
         "phpunit/phpunit": "~4.0",
@@ -25,6 +25,6 @@
             "GetStream\\StreamLaravel\\": "src/"
         }
     },
-    "minimum-stability": "dev"
+    "minimum-stability": "stable"
 }
 
