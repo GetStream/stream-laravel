@@ -32,7 +32,10 @@ class Enrich {
         $model_references = array();
         foreach ($activities as $key => $activity) {
             foreach ($activity as $field=>$value) {
-                if (in_array($field, $this->fields)){
+                if ($value === null) {
+                    continue;
+                }
+                if (in_array($field, $this->fields)) {
                     $reference = explode(':', $value);
                     $model_references[$reference[0]][$reference[1]] = 1;
                 }
