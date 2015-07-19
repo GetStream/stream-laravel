@@ -138,6 +138,20 @@ class Pin extends Eloquent {
     }
 ```
 
+####Customize activity verb
+
+By default, the verb field is the class name of the activity, you can change that implementing the `activityVerb` method.
+
+```php
+class Pin extends Eloquent {
+    use GetStream\StreamLaravel\Eloquent\ActivityTrait;
+
+    public function activityVerb()
+    {
+        return 'pin';
+    }
+
+```
 
 ###Feed manager
 
