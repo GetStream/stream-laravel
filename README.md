@@ -1,5 +1,5 @@
 ##Stream Laravel
-[![Build Status](https://travis-ci.org/GetStream/stream-laravel.svg?branch=master)](https://travis-ci.org/GetStream/stream-laravel)
+[![Build Status](https://travis-ci.org/GetStream/stream-laravel.svg?branch=master)](https://travis-ci.org/GetStream/stream-laravel) [![PHP version](https://badge.fury.io/ph/get-stream%2Fstream-laravel.svg)](http://badge.fury.io/ph/get-stream%2Fstream-laravel)
 
 This package helps you create activity streams & newsfeeds with Laravel and [GetStream.io](https://getstream.io).
 
