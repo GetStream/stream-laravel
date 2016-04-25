@@ -241,7 +241,7 @@ This is far from ready for usage in your template. We call the process of loadin
 ```
 use GetStream\StreamLaravel\Enrich;
 
-enricher = Enrich();
+$enricher = new Enrich();
 $feed = FeedManager::getNewsFeeds(Auth::id())['flat'];
 $activities = $feed->getActivities(0,25)['results'];
 $activities = $enricher->enrichActivities($activities);
