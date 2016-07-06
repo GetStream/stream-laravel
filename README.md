@@ -28,7 +28,7 @@ Begin by installing this package through Composer. Edit your project's composer.
 
 ```
 "require": {
-    "get-stream/stream-laravel": "~2.2.5"
+    "get-stream/stream-laravel": "~2.2.6"
 },
 ```
 
