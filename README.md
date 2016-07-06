@@ -28,7 +28,7 @@ Begin by installing this package through Composer. Edit your project's composer.
 
 ```
 "require": {
-    "get-stream/stream-laravel": "~2.1"
+    "get-stream/stream-laravel": "~2.5"
 },
 ```
 
@@ -169,11 +169,11 @@ $feed = FeedManager::getUserFeed($user->id);
 ```  
 #####News feeds:
 The news feeds store the activities from the people you follow. 
-There is both a flat newsfeed (similar to twitter) and an aggregated newsfeed (like facebook).
+There is both a timeline (similar to twitter) and an aggregated timeline (like facebook).
 
 ```php
-$flatFeed = FeedManager::getNewsFeed($user->id)['flat'];
-$aggregatedFeed = FeedManager::getNewsFeed($user->id)['aggregated'];
+$timelineFeed = FeedManager::getNewsFeed($user->id)['timeline'];
+$aggregatedTimelineFeed = FeedManager::getNewsFeed($user->id)['timeline_aggregated'];
 ```
 #####Notification feed:
 The notification feed can be used to build notification functionality. 
@@ -220,7 +220,7 @@ class Follow extends Eloquent {
 
 
 ####Follow a feed
-The create the newsfeeds you need to notify the system about follow relationships. The manager comes with APIs to let a user's news feeds follow another user's feed. This code lets the current user's flat and aggregated feeds follow the target_user's personal feed.
+The create the newsfeeds you need to notify the system about follow relationships. The manager comes with APIs to let a user's news feeds follow another user's feed. This code lets the current user's timeline and timeline_aggregated feeds follow the target_user's personal feed.
 
 ```
 FeedManager::followUser($userId, $targetId);
@@ -242,7 +242,7 @@ This is far from ready for usage in your template. We call the process of loadin
 use GetStream\StreamLaravel\Enrich;
 
 $enricher = new Enrich();
-$feed = FeedManager::getNewsFeeds(Auth::id())['flat'];
+$feed = FeedManager::getNewsFeeds(Auth::id())['timeline'];
 $activities = $feed->getActivities(0,25)['results'];
 $activities = $enricher->enrichActivities($activities);
 return View::make('feed', array('activities'=> $activities));
@@ -327,5 +327,5 @@ The full explanation can be found in the [getstream.io documentation](https://ge
 
 ```
 $specialFeed = FeedManager::getClient->feed('special', '42')
-$specialFeed->followFeed('flat', '60')
+$specialFeed->followFeed('timeline', '60')
 ```

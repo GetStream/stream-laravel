@@ -50,7 +50,7 @@ return [
     |
     */
     'news_feeds' => array(
-        'flat' => 'flat',
-        'aggregated' => 'aggregated',
+        'flat' => 'timeline',
+        'aggregated' => 'timeline_aggregated',
     )
 ];
