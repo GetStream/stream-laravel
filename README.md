@@ -27,7 +27,7 @@ Note: New Laravel 5.2 Example Application is coming soon!
 
 ### Composer
 
-1. Begin by installing this package through Composer. Edit your project's ```composer.json``` file to require get-stream/stream-laravel:
+- Begin by installing this package through Composer. Edit your project's ```composer.json``` file to require get-stream/stream-laravel:
 
 ```
 "require": {
@@ -35,7 +35,7 @@ Note: New Laravel 5.2 Example Application is coming soon!
 },
 ```
 
-2. Next, update Composer:
+- Next, update Composer:
 
 ```
 composer update
@@ -43,10 +43,10 @@ composer update
 
 ### Laravel 
 
-3. Add ```'GetStream\StreamLaravel\StreamLaravelServiceProvider'``` to the list of providers in ```config/app.php```:
+- Add ```'GetStream\StreamLaravel\StreamLaravelServiceProvider'``` to the list of providers in ```config/app.php```:
 
 
-*Laravel 5.1+*
+**Laravel 5.1+**
 ```
     'providers' => [
         GetStream\StreamLaravel\StreamLaravelServiceProvider::class,
@@ -54,7 +54,9 @@ composer update
     ],
 ```
 
-*Laravel <5.1*
+or
+
+**Laravel <5.1**
 ```
 'providers' => array(
         'GetStream\StreamLaravel\StreamLaravelServiceProvider',
@@ -62,10 +64,9 @@ composer update
     ),
 ```
 
-4. Add FeedManager facade ```'GetStream\StreamLaravel\Facades\FeedManager'``` to list of aliases in ```config/app.php```
+- Add FeedManager facade ```'GetStream\StreamLaravel\Facades\FeedManager'``` to list of aliases in ```config/app.php```
 
-
-*Laravel 5.1+*
+**Laravel 5.1+**
 ```
     'aliases' => [
         'FeedManager'       => GetStream\StreamLaravel\Facades\FeedManager::class,
@@ -73,7 +74,9 @@ composer update
     ],
 ```
 
-*Laravel <5.1*
+or
+
+**Laravel <5.1**
 ```
 'aliases' => array(
         'FeedManager'       => 'GetStream\StreamLaravel\Facades\FeedManager',
@@ -81,7 +84,7 @@ composer update
     ),
 ```
 
-5. Publish the configuration file:
+- Publish the configuration file:
 
 ```
 php artisan vendor:publish --provider="GetStream\StreamLaravel\StreamLaravelServiceProvider"
@@ -91,11 +94,11 @@ This will create ```config/stream-laravel.php```. We will set our credentials af
 
 ### GetStream.io Dashboard
 
-6. Now, login to [GetStream.io](https://getstream.io) and create an application in the dashboard.
+- Now, login to [GetStream.io](https://getstream.io) and create an application in the dashboard.
 
-7. Retrieve the API key, API secret, and API app id, which are shown in your dashboard.
+- Retrieve the API key, API secret, and API app id, which are shown in your dashboard.
 
-8. Create feeds in your new application. By default, you should create the following:
+- Create feeds in your new application. By default, you should create the following:
 
 - *user* - which is a _flat_ feed.
 - *timeline* - which is a _flat_ feed.
@@ -105,7 +108,7 @@ This will create ```config/stream-laravel.php```. We will set our credentials af
 
 ### Stream-Laravel Config File
 
-9. Set your key, secret, and app id in ```config/stream-laravel.php``` file as their are shown in your dashboard. Also set the location for good measure. For example:
+- Set your key, secret, and app id in ```config/stream-laravel.php``` file as their are shown in your dashboard. Also set the location for good measure. For example:
 
 ```
 return [
@@ -137,7 +140,7 @@ return [
 
 ```
 
-10. You can also set the name of your feeds here:
+- You can also set the name of your feeds here:
 
 ```
 /*
