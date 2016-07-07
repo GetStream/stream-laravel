@@ -27,7 +27,7 @@ Note: New Laravel 5.2 Example Application is coming soon!
 
 ### Composer
 
-- Begin by installing this package through Composer. Edit your project's ```composer.json``` file to require get-stream/stream-laravel:
+***Begin by installing this package through Composer. Edit your project's ```composer.json``` file to require ```get-stream/stream-laravel```:***
 
 ```
 "require": {
@@ -35,7 +35,7 @@ Note: New Laravel 5.2 Example Application is coming soon!
 },
 ```
 
-- Next, update Composer:
+***Next, update Composer:***
 
 ```
 composer update
@@ -43,7 +43,7 @@ composer update
 
 ### Laravel 
 
-- Add ```'GetStream\StreamLaravel\StreamLaravelServiceProvider'``` to the list of providers in ```config/app.php```:
+***Add ```'GetStream\StreamLaravel\StreamLaravelServiceProvider'``` to the list of providers in ```config/app.php```:***
 
 
 **Laravel 5.1+**
@@ -64,7 +64,7 @@ or
     ),
 ```
 
-- Add FeedManager facade ```'GetStream\StreamLaravel\Facades\FeedManager'``` to list of aliases in ```config/app.php```
+***Add FeedManager facade ```'GetStream\StreamLaravel\Facades\FeedManager'``` to list of aliases in ```config/app.php```:***
 
 **Laravel 5.1+**
 ```
@@ -84,7 +84,7 @@ or
     ),
 ```
 
-- Publish the configuration file:
+***Publish the configuration file:***
 
 ```
 php artisan vendor:publish --provider="GetStream\StreamLaravel\StreamLaravelServiceProvider"
@@ -94,21 +94,21 @@ This will create ```config/stream-laravel.php```. We will set our credentials af
 
 ### GetStream.io Dashboard
 
-- Now, login to [GetStream.io](https://getstream.io) and create an application in the dashboard.
+***Now, login to [GetStream.io](https://getstream.io) and create an application in the dashboard.***
 
-- Retrieve the API key, API secret, and API app id, which are shown in your dashboard.
+***Retrieve the API key, API secret, and API app id, which are shown in your dashboard.***
 
-- Create feeds in your new application. By default, you should create the following:
+***Create feeds in your new application. By default, you should create the following:***
 
-- *user* - which is a _flat_ feed.
-- *timeline* - which is a _flat_ feed.
-- *timeline_aggregrated* - which is an _aggregated_ feed.
-- *notification* - which is a _notification_ feed.
+- *user* which is a _flat_ feed.
+- *timeline* which is a _flat_ feed.
+- *timeline_aggregrated* which is an _aggregated_ feed.
+- *notification* which is a _notification_ feed.
 
 
 ### Stream-Laravel Config File
 
-- Set your key, secret, and app id in ```config/stream-laravel.php``` file as their are shown in your dashboard. Also set the location for good measure. For example:
+***Set your key, secret, and app id in ```config/stream-laravel.php``` file as their are shown in your dashboard. Also set the location for good measure. For example:***
 
 ```
 return [
@@ -140,7 +140,7 @@ return [
 
 ```
 
-- You can also set the name of your feeds here:
+***You can also set the name of your feeds here:***
 
 ```
 /*
