@@ -16,16 +16,18 @@ You can build:
 * A Notification System
 * Lots more...
 
-### Demo
+## Demo
 
-You can check out our example application built using this library: [https://github.com/GetStream/Stream-Example-PHP/](https://github.com/GetStream/Stream-Example-PHP/)
+You can check out our example application for Laravel 5.0 and Laravel 4 built using this library: [https://github.com/GetStream/Stream-Example-PHP/](https://github.com/GetStream/Stream-Example-PHP/)
 
-##Table of Contents
+Note: New Laravel 5.2 Example Application is coming soon!
 
 
-###Installation
+## Installation
 
-Begin by installing this package through Composer. Edit your project's composer.json file to require get-stream/stream-laravel.
+### Composer
+
+1. Begin by installing this package through Composer. Edit your project's ```composer.json``` file to require get-stream/stream-laravel:
 
 ```
 "require": {
@@ -33,16 +35,18 @@ Begin by installing this package through Composer. Edit your project's composer.
 },
 ```
 
-Next, update Composer:
+2. Next, update Composer:
 
 ```
 composer update
 ```
 
-Laravel 
+### Laravel 
 
-Add ```'GetStream\StreamLaravel\StreamLaravelServiceProvider'``` to the list of providers in ```config/app.php```
+3. Add ```'GetStream\StreamLaravel\StreamLaravelServiceProvider'``` to the list of providers in ```config/app.php```:
 
+
+*Laravel 5.1+*
 ```
     'providers' => [
         GetStream\StreamLaravel\StreamLaravelServiceProvider::class,
@@ -50,8 +54,18 @@ Add ```'GetStream\StreamLaravel\StreamLaravelServiceProvider'``` to the list of 
     ],
 ```
 
-Add FeedManager facade ```'GetStream\StreamLaravel\Facades\FeedManager'``` to list of aliases in ```config/app.php```
+*Laravel <5.1*
+```
+'providers' => array(
+        'GetStream\StreamLaravel\StreamLaravelServiceProvider',
+        ...
+    ),
+```
 
+4. Add FeedManager facade ```'GetStream\StreamLaravel\Facades\FeedManager'``` to list of aliases in ```config/app.php```
+
+
+*Laravel 5.1+*
 ```
     'aliases' => [
         'FeedManager'       => GetStream\StreamLaravel\Facades\FeedManager::class,
@@ -59,28 +73,106 @@ Add FeedManager facade ```'GetStream\StreamLaravel\Facades\FeedManager'``` to li
     ],
 ```
 
-Publish the configuration file
+*Laravel <5.1*
+```
+'aliases' => array(
+        'FeedManager'       => 'GetStream\StreamLaravel\Facades\FeedManager',
+        ...
+    ),
+```
+
+5. Publish the configuration file:
 
 ```
 php artisan vendor:publish --provider="GetStream\StreamLaravel\StreamLaravelServiceProvider"
 ```
 
-Login with GitHub on getstream.io and set ```api_key``` and ```api_secret``` in the stream-laravel config file as their are shown in your dashboard.
+This will create ```config/stream-laravel.php```. We will set our credentials after they are created in the Stream Dashboard.
 
-for example:
-```php
-return array(
-    'api_key' => 'API_KEY',
-    'api_secret' => 'API_SECRET',
-    'api_app_id' => 'API_APP_ID',
+### GetStream.io Dashboard
+
+6. Now, login to [GetStream.io](https://getstream.io) and create an application in the dashboard.
+
+7. Retrieve the API key, API secret, and API app id, which are shown in your dashboard.
+
+8. Create feeds in your new application. By default, you should create the following:
+
+- *user* - which is a _flat_ feed.
+- *timeline* - which is a _flat_ feed.
+- *timeline_aggregrated* - which is an _aggregated_ feed.
+- *notification* - which is a _notification_ feed.
+
+
+### Stream-Laravel Config File
+
+9. Set your key, secret, and app id in ```config/stream-laravel.php``` file as their are shown in your dashboard. Also set the location for good measure. For example:
+
+```
+return [
+
+    /*
+    |-----------------------------------------------------------------------------
+    | Your GetStream.io API credentials (you can them from getstream.io/dashboard)
+    |-----------------------------------------------------------------------------
+    |
+    */
+
+    'api_key' => '[API KEY HERE]',
+    'api_secret' => '[API SECRET HERE]',
+    'api_app_id' => '[API APP ID HERE]',
+    /*
+    |-----------------------------------------------------------------------------
+    | Client connection options
+    |-----------------------------------------------------------------------------
+    |
+    */
     'location' => 'us-east',
     'timeout' => 3,
-)
+    /*
+    |-----------------------------------------------------------------------------
+    | The default feed manager class
+    |-----------------------------------------------------------------------------
+    |
+    */
+
 ```
 
-###Eloquent Integration
+10. You can also set the name of your feeds here:
 
-Instant integration with Eloquent models - extending the ```GetStream\StreamLaravel\Eloquent\Activity``` class will give you automatic tracking of your models to user feeds. 
+```
+/*
+    |-----------------------------------------------------------------------------
+    | The feed that keeps content created by its author
+    |-----------------------------------------------------------------------------
+    |
+    */
+    'user_feed' => 'user',
+    /*
+    |-----------------------------------------------------------------------------
+    | The feed containing notification activities
+    |-----------------------------------------------------------------------------
+    |
+    */
+    'notification_feed' => 'notification',
+    /*
+    |-----------------------------------------------------------------------------
+    | The feeds that shows activities from followed user feeds
+    |-----------------------------------------------------------------------------
+    |
+    */
+    'news_feeds' => array(
+        'timeline' => 'timeline',
+        'timeline_aggregated' => 'timeline_aggregated',
+    )
+```
+
+And that should get you off and running with Stream-Laravel. Have lots of fun!
+
+#Features of Stream-Laravel
+
+##Eloquent Integration
+
+Stream-Laravel provides instant integration with Eloquent models - extending the ```GetStream\StreamLaravel\Eloquent\Activity``` class will give you automatic tracking of your models to user feeds.
 
 For example:
 
@@ -92,6 +184,8 @@ class Pin extends Eloquent {
 ```
 
 Everytime a Pin is created it will be stored in the feed of the user that created it, and when a Pin instance is deleted than it will get removed as well.
+
+Automatically!
 
 ###Activity Fields
 
@@ -160,16 +254,16 @@ class Pin extends Eloquent {
 
 Stream Laravel comes with a FeedManager class that helps with all common feed operations. You can get an instance of the manager with ```FeedManager``` if you defined the facade alias (see above in the install), or with ```App::make('feed_manager')``` if you did not.
 
-###Pre-Bundled Feeds
+##Pre-Bundled Feeds
 
 To get you started the manager has feeds pre configured. You can add more feeds if your application needs it. The three feeds are divided in three categories.
 
-####User Feed:
+###User Feed:
 The user feed stores all activities for a user. Think of it as your personal Facebook page. You can easily get this feed from the manager.  
 ```php
 $feed = FeedManager::getUserFeed($user->id);
 ```  
-####News Feed:
+###News Feed:
 The news feeds store the activities from the people you follow. 
 There is both a timeline (similar to twitter) and an aggregated timeline (like facebook).
 
@@ -177,7 +271,7 @@ There is both a timeline (similar to twitter) and an aggregated timeline (like f
 $timelineFeed = FeedManager::getNewsFeed($user->id)['timeline'];
 $aggregatedTimelineFeed = FeedManager::getNewsFeed($user->id)['timeline_aggregated'];
 ```
-####Notification Feed:
+###Notification Feed:
 The notification feed can be used to build notification functionality. 
 
 ![Notification feed](http://feedly.readthedocs.org/en/latest/_images/fb_notification_system.png)
