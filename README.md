@@ -18,9 +18,13 @@ You can build:
 
 ## Demo
 
-You can check out our example application for Laravel 5.0 and Laravel 4 built using this library: [https://github.com/GetStream/Stream-Example-PHP/](https://github.com/GetStream/Stream-Example-PHP/)
+### Laravel 5.2
 
-Note: New Laravel 5.2 Example Application is coming soon!
+[New Laravel 5.2 Example Application is here!(https://github.com/GetStream/Stream-Laravel-Example)
+
+### Laravel 5, 4
+
+You can check out our example application for Laravel 5.0 and Laravel 4 built using this library: [https://github.com/GetStream/Stream-Example-PHP/](https://github.com/GetStream/Stream-Example-PHP/)
 
 
 ## Installation
