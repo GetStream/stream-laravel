@@ -20,7 +20,7 @@ You can build:
 
 ### Laravel 5.2
 
-[New Laravel 5.2 Example Application is here!(https://github.com/GetStream/Stream-Laravel-Example)
+[New Laravel 5.2 Example Application is here!](https://github.com/GetStream/Stream-Laravel-Example)
 
 ### Laravel 5, 4
 
