@@ -1,89 +1,64 @@
-<?php namespace GetStream\StreamLaravel;
+<?php
+
+namespace GetStream\StreamLaravel;
 
 use Illuminate\Support\ServiceProvider;
 
-class StreamLaravelServiceProvider extends ServiceProvider {
+class StreamLaravelServiceProvider extends ServiceProvider
+{
+    /**
+     * Actual provider
+     *
+     * @var \Illuminate\Support\ServiceProvider
+     */
+    protected $provider;
 
-	/**
-	 * Indicates if loading of the provider is deferred.
-	 *
-	 * @var bool
-	 */
-	protected $defer = false;
+    /**
+     * Create a new service provider instance.
+     *
+     * @param  \Illuminate\Contracts\Foundation\Application  $app
+     * @return void
+     */
+    public function __construct($app)
+    {
+        parent::__construct($app);
 
-	/**
-	 * Bootstrap the application events.
-	 *
-	 * @return void
-	 */
-	public function boot()
-	{
-		if (method_exists($this, 'publishes')) {
-			$this->loadViewsFrom(__DIR__.'/../../views', 'stream-laravel');
+        $this->provider = $this->getProvider();
+    }
 
-			$this->publishes([
-			    __DIR__.'/../../config/config.php' => config_path('stream-laravel.php'),
-			    __DIR__.'/../../views' => base_path('resources/views/vendor/stream-laravel'),
-			]);
-		} else {
-			$this->package('get-stream/stream-laravel');
-		}
-	}
+    /**
+     * Bootstrap the application events.
+     *
+     * @return void
+     */
+    public function boot()
+    {
+        return $this->provider->boot();
+    }
 
-	/**
-	 * Register the service provider.
-	 *
-	 * @return void
-	 */
-	public function register()
-	{
+    /**
+     * Register the service provider.
+     *
+     * @return void
+     */
+    public function register()
+    {
+        return $this->provider->register();
+    }
 
-		if (method_exists($this, 'publishes')) {
-			$this->registerResources();
-		}
+    /**
+     * Return ServiceProvider according to Laravel version
+     *
+     * @return \Illuminate\Support\ServiceProvider
+     */
+    private function getProvider()
+    {
+        if (version_compare(\Illuminate\Foundation\Application::VERSION, '5.0', '<')) {
+            $provider = '\GetStream\StreamLaravel\StreamServiceProviderLaravel4';
+        } else {
+            $provider = '\GetStream\StreamLaravel\StreamServiceProviderLaravel5';
+        }
 
-		$this->app['feed_manager'] = $this->app->share(function($app)
-        {
-
-        	$manager_class = $app['config']->get('stream-laravel::feed_manager_class');
-        	$api_key = $app['config']->get('stream-laravel::api_key');
-        	$api_secret = $app['config']->get('stream-laravel::api_secret');
-
-            return new $manager_class($api_key, $api_secret, $this->app['config']);
-        });
-	}
-
-	/**
-	 * Register the package resources.
-	 *
-	 * @return void
-	 */
-	protected function registerResources()
-	{
-	    $userConfigFile    = app()->configPath().'/stream-laravel.php';
-	    $packageConfigFile = __DIR__.'/../../config/config.php';
-	    $config            = $this->app['files']->getRequire($packageConfigFile);
-
-	    if (file_exists($userConfigFile)) {
-	        $userConfig = $this->app['files']->getRequire($userConfigFile);
-	        $config     = array_replace_recursive($config, $userConfig);
-	    }
-
-	    $namespace = 'stream-laravel::';
-
-	    foreach($config as $key => $value) {
-	    	$this->app['config']->set($namespace . $key , $value);
-	    }
-	}
-
-	/**
-	 * Get the services provided by the provider.
-	 *
-	 * @return array
-	 */
-	public function provides()
-	{
-		return array();
-	}
-
+        return new $provider($this->app);
+    }
 }
