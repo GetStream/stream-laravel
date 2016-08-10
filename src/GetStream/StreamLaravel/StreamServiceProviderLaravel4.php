@@ -2,7 +2,6 @@
 
 namespace GetStream\StreamLaravel;
 
-use Illuminate\Support\Collection;
 use Illuminate\Support\ServiceProvider;
 
 class StreamServiceProviderLaravel4 extends ServiceProvider
@@ -31,7 +30,7 @@ class StreamServiceProviderLaravel4 extends ServiceProvider
             $key = $config['api_key'];
             $secret = $config['api_secret'];
 
-            return new $managerClass($key, $secret, new Collection($config));
+            return new $managerClass($key, $secret, $app['config']);
         });
     }
 }

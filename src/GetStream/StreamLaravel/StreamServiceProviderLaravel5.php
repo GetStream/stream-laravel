@@ -37,7 +37,7 @@ class StreamServiceProviderLaravel5 extends ServiceProvider
             $key = $config['api_key'];
             $secret = $config['api_secret'];
 
-            return new $managerClass($key, $secret, new Collection($config));
+            return new $managerClass($key, $secret, $app['config']);
         });
     }
 }
