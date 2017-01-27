@@ -42,9 +42,8 @@ class StreamLaravelServiceProvider extends ServiceProvider {
 			$this->registerResources();
 		}
 
-		$this->app['feed_manager'] = $this->app->share(function($app)
+		$this->app->singleton('feed_manager', function($app)
         {
-
         	$manager_class = $app['config']->get('stream-laravel::feed_manager_class');
         	$api_key = $app['config']->get('stream-laravel::api_key');
         	$api_secret = $app['config']->get('stream-laravel::api_secret');
