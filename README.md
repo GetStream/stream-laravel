@@ -1,9 +1,9 @@
-#Stream Laravel
+# Stream Laravel
 [![Build Status](https://travis-ci.org/GetStream/stream-laravel.svg?branch=master)](https://travis-ci.org/GetStream/stream-laravel) [![PHP version](https://badge.fury.io/ph/get-stream%2Fstream-laravel.svg)](http://badge.fury.io/ph/get-stream%2Fstream-laravel)
 
 This package helps you create activity streams & newsfeeds with Laravel and [GetStream.io](https://getstream.io).
 
-##Build Activity Streams, News Feeds, and More
+## Build Activity Streams, News Feeds, and More
 
 ![](https://dvqg2dogggmn6.cloudfront.net/images/mood-home.png)
 
@@ -175,9 +175,9 @@ return [
 
 And that should get you off and running with Stream-Laravel. Have lots of fun!
 
-#Features of Stream-Laravel
+# Features of Stream-Laravel
 
-##Eloquent Integration
+## Eloquent Integration
 
 Stream-Laravel provides instant integration with Eloquent models - extending the ```GetStream\StreamLaravel\Eloquent\Activity``` class will give you automatic tracking of your models to user feeds.
 
@@ -194,7 +194,7 @@ Everytime a Pin is created it will be stored in the feed of the user that create
 
 Automatically!
 
-###Activity Fields
+### Activity Fields
 
 Models are stored in feeds as activities. An activity is composed of at least the following data fields: **actor**, **verb**, **object**, **time**. You can also add more custom data if needed.  
 
@@ -226,7 +226,7 @@ class Pin extends Eloquent {
     }
 ```
 
-###Activity Extra Data
+### Activity Extra Data
 
 Often, you'll want to store more data than just the basic fields. You achieve this by implementing the ```activityExtraData``` method in the model.
 
@@ -242,7 +242,7 @@ class Pin extends Eloquent {
     }
 ```
 
-###Customize Activity Verb
+### Customize Activity Verb
 
 By default, the verb field is the class name of the activity, you can change that implementing the `activityVerb` method.
 
@@ -257,20 +257,20 @@ class Pin extends Eloquent {
 
 ```
 
-##Feed Manager
+## Feed Manager
 
 Stream Laravel comes with a FeedManager class that helps with all common feed operations. You can get an instance of the manager with ```FeedManager``` if you defined the facade alias (see above in the install), or with ```App::make('feed_manager')``` if you did not.
 
-##Pre-Bundled Feeds
+## Pre-Bundled Feeds
 
 To get you started the manager has feeds pre configured. You can add more feeds if your application needs it. The three feeds are divided in three categories.
 
-###User Feed:
+### User Feed:
 The user feed stores all activities for a user. Think of it as your personal Facebook page. You can easily get this feed from the manager.  
 ```php
 $feed = FeedManager::getUserFeed($user->id);
 ```  
-###News Feed:
+### News Feed:
 The news feeds store the activities from the people you follow. 
 There is both a timeline (similar to twitter) and an aggregated timeline (like facebook).
 
@@ -278,7 +278,7 @@ There is both a timeline (similar to twitter) and an aggregated timeline (like f
 $timelineFeed = FeedManager::getNewsFeed($user->id)['timeline'];
 $aggregatedTimelineFeed = FeedManager::getNewsFeed($user->id)['timeline_aggregated'];
 ```
-###Notification Feed:
+### Notification Feed:
 The notification feed can be used to build notification functionality. 
 
 ![Notification feed](http://feedly.readthedocs.org/en/latest/_images/fb_notification_system.png)
@@ -322,16 +322,16 @@ class Follow extends Eloquent {
 ```
 
 
-##Follow Feed
+## Follow Feed
 The create the newsfeeds you need to notify the system about follow relationships. The manager comes with APIs to let a user's news feeds follow another user's feed. This code lets the current user's timeline and timeline_aggregated feeds follow the target_user's personal feed.
 
 ```
 FeedManager::followUser($userId, $targetId);
 ```
 
-##Displaying the Newsfeed
+## Displaying the Newsfeed
 
-###Activity Enrichment
+### Activity Enrichment
 
 When you read data from feeds, a like activity will look like this:
 
@@ -353,7 +353,7 @@ return View::make('feed', array('activities'=> $activities));
 
 
 
-###Templating
+### Templating
 
 Now that you've enriched the activities you can render them in a view.
 For convenience we includes a basic view:
@@ -382,11 +382,11 @@ The example below will use the view activity/homepage_like.html
 ```
 
 
-###Customizing Enrichment
+### Customizing Enrichment
 
 Sometimes you'll want to customize how enrichment works. The documentation will show you several common options.
 
-###Enrich Extra Fields
+### Enrich Extra Fields
 
 If you store references to model instances in the activity extra_data you can use the Enrich class to take care of it for you:
 
@@ -409,7 +409,7 @@ $activities = $feed->getActivities(0,25)['results'];
 $activities = $enricher->enrichActivities($activities);
 ```
 
-###Preload Related Data
+### Preload Related Data
 
 You will commonly access related objects such as activity['object']->user. To prevent your newsfeed to run N queries you can instruct the manager to load related objects. The manager will use Eloquent's ```With``` functionality.
 
@@ -423,7 +423,7 @@ class Pin extends Eloquent {
     }
 ```
 
-##Low level API Access
+## Low level API Access
 
 When needed, you can also use the low level PHP client API directly.
 The full explanation can be found in the [getstream.io documentation](https://getstream.io/docs/).
