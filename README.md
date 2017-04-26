@@ -1,7 +1,11 @@
 # Stream Laravel
 [![Build Status](https://travis-ci.org/GetStream/stream-laravel.svg?branch=master)](https://travis-ci.org/GetStream/stream-laravel) [![PHP version](https://badge.fury.io/ph/get-stream%2Fstream-laravel.svg)](http://badge.fury.io/ph/get-stream%2Fstream-laravel)
 
-This package helps you create activity streams & newsfeeds with Laravel and [GetStream.io](https://getstream.io).
+[stream-laravel](https://github.com/GetStream/stream-laravel) is a Laravel client for [Stream](https://getstream.io/).
+
+You can sign up for a Stream account at https://getstream.io/get_started.
+
+Note there is also a lower level [PHP - Stream integration](https://github.com/getstream/stream-php) library which is suitable for all PHP applications.
 
 ## Build Activity Streams, News Feeds, and More
 
@@ -45,7 +49,7 @@ You can check out our example application for Laravel 5.0 and Laravel 4 built us
 composer update
 ```
 
-### Laravel 
+### Laravel
 
 ***Add ```'GetStream\StreamLaravel\StreamLaravelServiceProvider'``` to the list of providers in ```config/app.php```:***
 
@@ -196,10 +200,10 @@ Automatically!
 
 ### Activity Fields
 
-Models are stored in feeds as activities. An activity is composed of at least the following data fields: **actor**, **verb**, **object**, **time**. You can also add more custom data if needed.  
+Models are stored in feeds as activities. An activity is composed of at least the following data fields: **actor**, **verb**, **object**, **time**. You can also add more custom data if needed.
 
-**object** is a reference to the model instance itself  
-**actor** is a reference to the user attribute of the instance  
+**object** is a reference to the model instance itself
+**actor** is a reference to the user attribute of the instance
 **verb** is a string representation of the class name
 
 In order to work out-of-the-box the Activity class makes makes few assumptions:
@@ -266,12 +270,12 @@ Stream Laravel comes with a FeedManager class that helps with all common feed op
 To get you started the manager has feeds pre configured. You can add more feeds if your application needs it. The three feeds are divided in three categories.
 
 ### User Feed:
-The user feed stores all activities for a user. Think of it as your personal Facebook page. You can easily get this feed from the manager.  
+The user feed stores all activities for a user. Think of it as your personal Facebook page. You can easily get this feed from the manager.
 ```php
 $feed = FeedManager::getUserFeed($user->id);
-```  
+```
 ### News Feed:
-The news feeds store the activities from the people you follow. 
+The news feeds store the activities from the people you follow.
 There is both a timeline (similar to twitter) and an aggregated timeline (like facebook).
 
 ```php
@@ -279,10 +283,10 @@ $timelineFeed = FeedManager::getNewsFeed($user->id)['timeline'];
 $aggregatedTimelineFeed = FeedManager::getNewsFeed($user->id)['timeline_aggregated'];
 ```
 ### Notification Feed:
-The notification feed can be used to build notification functionality. 
+The notification feed can be used to build notification functionality.
 
 ![Notification feed](http://feedly.readthedocs.org/en/latest/_images/fb_notification_system.png)
-  
+
 Below we show an example of how you can read the notification feed.
 ```php
 notification_feed = FeedManager::getNotificationFeed($user->id);
@@ -349,7 +353,7 @@ $feed = FeedManager::getNewsFeeds(Auth::id())['timeline'];
 $activities = $feed->getActivities(0,25)['results'];
 $activities = $enricher->enrichActivities($activities);
 return View::make('feed', array('activities'=> $activities));
-``` 
+```
 
 
 
@@ -374,7 +378,7 @@ The ```stream-laravel::render_activity``` view tag will render the view activity
 
 For example activity/tweet.blade.php will be used to render an normal activity with verb tweet and aggregated_activity/like.blade.php for an aggregated activity with verb like
 
-If you need to support different kind of templates for the same activity, you can send a third parameter to change the view selection.  
+If you need to support different kind of templates for the same activity, you can send a third parameter to change the view selection.
 
 The example below will use the view activity/homepage_like.html
 ```
@@ -423,13 +427,17 @@ class Pin extends Eloquent {
     }
 ```
 
-## Low level API Access
+### Full documentation and Low level APIs access
 
-When needed, you can also use the low level PHP client API directly.
-The full explanation can be found in the [getstream.io documentation](https://getstream.io/docs/).
-
+When needed you can also use the [low level PHP API](https://github.com/getstream/stream-php) directly. Documentation is available at the [Stream website](https://getstream.io/docs/?language=php).
 
 ```
 $specialFeed = FeedManager::getClient->feed('special', '42')
 $specialFeed->followFeed('timeline', '60')
 ```
+
+### Copyright and License Information
+
+Copyright (c) 2014-2017 Stream.io Inc, and individual contributors. All rights reserved.
+
+See the file "LICENSE" for information on the history of this software, terms & conditions for usage, and a DISCLAIMER OF ALL WARRANTIES.
