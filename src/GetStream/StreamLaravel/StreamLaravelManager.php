@@ -82,6 +82,17 @@ class StreamLaravelManager {
         $foreignId = $instance->activityForeignId();
         $feed = $this->getFeed($this->userFeed, $instance->activityActorId());
         $feed->removeActivity($foreignId, true);
+
+        if ( ! is_null($instance->activityNotify()) )
+        {
+            foreach( $instance->activityNotify() as $to )
+            {
+                $toId = explode(":", $to->getId())[1];
+
+                $notificationFeed = $this->getFeed($this->config->get("stream-laravel::notification_feed"), $toId);
+                $notificationFeed->removeActivity($foreignId, true);
+            }
+        }
     }
 
 }
