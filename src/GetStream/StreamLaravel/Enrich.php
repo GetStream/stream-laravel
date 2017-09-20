@@ -50,8 +50,8 @@ class Enrich {
         foreach ($references as $content_type => $content_ids) {
             $content_type_model = new $content_type;
             $with = array();
-            if (property_exists($content_type_model, 'activityLazyLoading')) {
-                $with = $content_type_model->activityLazyLoading;
+            if (method_exists($content_type_model, 'activityLazyLoading')) {
+                $with = $content_type_model->activityLazyLoading();
             }
             $fetched = $this->fromDb($content_type_model, array_keys($content_ids), $with);
             $objects[$content_type] = $fetched;
