@@ -25,6 +25,16 @@
             "GetStream\\StreamLaravel\\": "src/"
         }
     },
-    "minimum-stability": "stable"
+    "minimum-stability": "stable",
+    "extra": {
+        "laravel": {
+            "providers": [
+                "GetStream\\StreamLaravel\\StreamLaravelServiceProvider"
+            ],
+            "aliases": {
+                "FeedManager": "GetStream\\StreamLaravel\\Facades\\FeedManager"
+            }
+        }
+    }
 }
 
