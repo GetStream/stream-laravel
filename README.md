@@ -51,10 +51,13 @@ composer update
 
 ### Laravel
 
+**Laravel 5.5**
+
+Skip this step, [you're done!](https://medium.com/@taylorotwell/package-auto-discovery-in-laravel-5-5-ea9e3ab20518) You can now start building your feed.
+
 ***Add ```'GetStream\StreamLaravel\StreamLaravelServiceProvider'``` to the list of providers in ```config/app.php```:***
 
-
-**Laravel 5.1+**
+**Laravel >5.1+ <5.5**
 ```
     'providers' => [
         GetStream\StreamLaravel\StreamLaravelServiceProvider::class,
