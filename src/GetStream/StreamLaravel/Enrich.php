@@ -90,6 +90,17 @@ class Enrich {
         return $activities;
     }
 
+    private function injectCarbonTimestamps($activities, $timestampKey)
+    {
+        foreach ($activities as $key => $activity) {
+            if ($activity->offsetExists($timestampKey)) {
+                $activities[$key][$timestampKey] = new \Carbon\Carbon($activity[$timestampKey]);
+            }
+        }
+
+        return $activities;
+    }
+
     public function enrichActivities($activities)
     {
         $activities = $this->wrapActivities($activities);
@@ -101,6 +112,8 @@ class Enrich {
         $references = $this->collectReferences($activities);
         $objects = $this->retrieveObjects($references);
         $activities = $this->injectObjects($activities, $objects);
+        $activities = $this->injectCarbonTimestamps($activities, 'time');
+
         return $activities;
     }
 
@@ -119,9 +132,10 @@ class Enrich {
             $references = array_replace_recursive($references, $this->collectReferences($aggregated['activities']));
         }
 
+        $aggregatedActivities = $this->injectCarbonTimestamps($aggregatedActivities, 'updated_at');
+
         $objects = $this->retrieveObjects($references);
         foreach ($aggregatedActivities as $key => $aggregated) {
-            $aggregatedActivities[$key]['updated_at'] = new \Carbon\Carbon($aggregatedActivities[$key]['updated_at']);
             $this->injectObjects($aggregatedActivities[$key]['activities'], $objects);
         }
         return $aggregatedActivities;
