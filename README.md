@@ -51,48 +51,24 @@ composer update
 
 ### Laravel
 
-**Laravel 5.5**
+**Laravel prior to 5.5**
 
-Skip this step, [you're done!](https://medium.com/@taylorotwell/package-auto-discovery-in-laravel-5-5-ea9e3ab20518) You can now start building your feed.
+Add `'GetStream\StreamLaravel\StreamLaravelServiceProvider'` to your list of providers in `config/app.php`:
 
-***Add ```'GetStream\StreamLaravel\StreamLaravelServiceProvider'``` to the list of providers in ```config/app.php```:***
-
-**Laravel >5.1+ <5.5**
 ```
-    'providers' => [
-        GetStream\StreamLaravel\StreamLaravelServiceProvider::class,
-        ...
-    ],
+'providers' => [
+    GetStream\StreamLaravel\StreamLaravelServiceProvider::class,
+    ...
+],
 ```
 
-or
+And add the `FeedManager` facade `'GetStream\StreamLaravel\Facades\FeedManager'` to your list of aliases in `config/app.php`:
 
-**Laravel <5.1**
 ```
-'providers' => array(
-        'GetStream\StreamLaravel\StreamLaravelServiceProvider',
-        ...
-    ),
-```
-
-***Add FeedManager facade ```'GetStream\StreamLaravel\Facades\FeedManager'``` to list of aliases in ```config/app.php```:***
-
-**Laravel 5.1+**
-```
-    'aliases' => [
-        'FeedManager'       => GetStream\StreamLaravel\Facades\FeedManager::class,
-        ...
-    ],
-```
-
-or
-
-**Laravel <5.1**
-```
-'aliases' => array(
-        'FeedManager'       => 'GetStream\StreamLaravel\Facades\FeedManager',
-        ...
-    ),
+'aliases' => [
+    'FeedManager' => GetStream\StreamLaravel\Facades\FeedManager::class,
+    ...
+],
 ```
 
 ***Publish the configuration file:***
