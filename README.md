@@ -51,45 +51,24 @@ composer update
 
 ### Laravel
 
-***Add ```'GetStream\StreamLaravel\StreamLaravelServiceProvider'``` to the list of providers in ```config/app.php```:***
+**Laravel prior to 5.5**
 
+Add `'GetStream\StreamLaravel\StreamLaravelServiceProvider'` to your list of providers in `config/app.php`:
 
-**Laravel 5.1+**
 ```
-    'providers' => [
-        GetStream\StreamLaravel\StreamLaravelServiceProvider::class,
-        ...
-    ],
-```
-
-or
-
-**Laravel <5.1**
-```
-'providers' => array(
-        'GetStream\StreamLaravel\StreamLaravelServiceProvider',
-        ...
-    ),
+'providers' => [
+    GetStream\StreamLaravel\StreamLaravelServiceProvider::class,
+    ...
+],
 ```
 
-***Add FeedManager facade ```'GetStream\StreamLaravel\Facades\FeedManager'``` to list of aliases in ```config/app.php```:***
+And add the `FeedManager` facade `'GetStream\StreamLaravel\Facades\FeedManager'` to your list of aliases in `config/app.php`:
 
-**Laravel 5.1+**
 ```
-    'aliases' => [
-        'FeedManager'       => GetStream\StreamLaravel\Facades\FeedManager::class,
-        ...
-    ],
-```
-
-or
-
-**Laravel <5.1**
-```
-'aliases' => array(
-        'FeedManager'       => 'GetStream\StreamLaravel\Facades\FeedManager',
-        ...
-    ),
+'aliases' => [
+    'FeedManager' => GetStream\StreamLaravel\Facades\FeedManager::class,
+    ...
+],
 ```
 
 ***Publish the configuration file:***
