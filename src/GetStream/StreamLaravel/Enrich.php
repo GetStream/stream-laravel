@@ -1,11 +1,13 @@
-<?php namespace GetStream\StreamLaravel;
+<?php
 
-use GetStream\StreamLaravel\EnrichedActivity;
-use GetStream\StreamLaravel\Exceptions\MissingDataException;
+namespace GetStream\StreamLaravel;
 
-class Enrich {
+use Carbon\Carbon;
 
-    private $fields = array();
+class Enrich
+{
+    private $fields = [];
+    private $withTrashed;
 
     public function __construct($fields = ['actor', 'object'], $withTrashed = true)
     {
@@ -122,10 +124,9 @@ class Enrich {
 
         $objects = $this->retrieveObjects($references);
         foreach ($aggregatedActivities as $key => $aggregated) {
-            $aggregatedActivities[$key]['updated_at'] = new \Carbon\Carbon($aggregatedActivities[$key]['updated_at']);
+            $aggregatedActivities[$key]['updated_at'] = new Carbon($aggregatedActivities[$key]['updated_at']);
             $this->injectObjects($aggregatedActivities[$key]['activities'], $objects);
         }
         return $aggregatedActivities;
     }
-
 }

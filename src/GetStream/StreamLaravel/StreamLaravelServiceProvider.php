@@ -1,9 +1,11 @@
-<?php namespace GetStream\StreamLaravel;
+<?php
+
+namespace GetStream\StreamLaravel;
 
 use Illuminate\Support\ServiceProvider;
 
-class StreamLaravelServiceProvider extends ServiceProvider {
-
+class StreamLaravelServiceProvider extends ServiceProvider
+{
     /**
      * Indicates if loading of the provider is deferred.
      *
@@ -37,13 +39,11 @@ class StreamLaravelServiceProvider extends ServiceProvider {
      */
     public function register()
     {
-
         if (method_exists($this, 'publishes')) {
             $this->registerResources();
         }
 
-        $this->app->singleton('feed_manager', function($app)
-        {
+        $this->app->singleton('feed_manager', function ($app) {
             $manager_class = $app['config']->get('stream-laravel::feed_manager_class');
             $api_key = $app['config']->get('stream-laravel::api_key');
             $api_secret = $app['config']->get('stream-laravel::api_secret');
@@ -59,13 +59,13 @@ class StreamLaravelServiceProvider extends ServiceProvider {
      */
     protected function registerResources()
     {
-        $userConfigFile    = app()->configPath().'/stream-laravel.php';
+        $userConfigFile = $this->app->configPath().'/stream-laravel.php';
         $packageConfigFile = __DIR__.'/../../config/config.php';
-        $config            = $this->app['files']->getRequire($packageConfigFile);
+        $config = $this->app['files']->getRequire($packageConfigFile);
 
         if (file_exists($userConfigFile)) {
             $userConfig = $this->app['files']->getRequire($userConfigFile);
-            $config     = array_replace_recursive($config, $userConfig);
+            $config = array_replace_recursive($config, $userConfig);
         }
 
         $namespace = 'stream-laravel::';
@@ -84,5 +84,4 @@ class StreamLaravelServiceProvider extends ServiceProvider {
     {
         return [];
     }
-
 }
