@@ -34,7 +34,7 @@ class StreamLaravelManager {
 
     public function getNewsFeeds($user_id)
     {
-        $feeds = array();
+        $feeds = [];
         $news_feeds = $this->config->get("stream-laravel::news_feeds");
         foreach ($news_feeds as $feed) {
             $feeds[$feed] = $this->client->feed($feed, $user_id);

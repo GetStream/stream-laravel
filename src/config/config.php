@@ -49,8 +49,8 @@ return [
     |-----------------------------------------------------------------------------
     |
     */
-    'news_feeds' => array(
+    'news_feeds' => [
         'timeline' => 'timeline',
         'timeline_aggregated' => 'timeline_aggregated',
-    )
+    ]
 ];
