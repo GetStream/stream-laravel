@@ -7,13 +7,6 @@ use Illuminate\Support\ServiceProvider;
 class StreamLaravelServiceProvider extends ServiceProvider
 {
     /**
-     * Indicates if loading of the provider is deferred.
-     *
-     * @var bool
-     */
-    protected $defer = false;
-
-    /**
      * Bootstrap the application events.
      *
      * @return void
@@ -73,15 +66,5 @@ class StreamLaravelServiceProvider extends ServiceProvider
         foreach($config as $key => $value) {
             $this->app['config']->set($namespace . $key , $value);
         }
-    }
-
-    /**
-     * Get the services provided by the provider.
-     *
-     * @return array
-     */
-    public function provides()
-    {
-        return [];
     }
 }
