@@ -147,5 +147,4 @@ trait ActivityTrait
 
         return $activity;
     }
-
 }

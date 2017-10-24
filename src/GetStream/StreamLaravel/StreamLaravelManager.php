@@ -1,9 +1,15 @@
-<?php namespace GetStream\StreamLaravel;
+<?php
 
+namespace GetStream\StreamLaravel;
+
+use Exception;
 use GetStream\Stream\Client;
 
-class StreamLaravelManager {
-
+class StreamLaravelManager
+{
+    /**
+     * @var Client
+     */
     public $client;
     private $config;
 
@@ -83,5 +89,4 @@ class StreamLaravelManager {
         $feed = $this->getFeed($this->userFeed, $instance->activityActorId());
         $feed->removeActivity($foreignId, true);
     }
-
 }
