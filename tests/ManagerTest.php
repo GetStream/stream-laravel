@@ -3,10 +3,10 @@
 use GetStream\StreamLaravel\StreamLaravelManager;
 use Mockery as m;
 
-class ManagerTest extends \PHPUnit_Framework_TestCase
+class ManagerTest extends PHPUnit_Framework_TestCase
 {
-
-    public function setUp(){
+    public function setUp()
+    {
         parent::setUp();
         $config = m::mock('ConfigMock');
         $config->shouldReceive('get')->once()->with('stream-laravel::user_feed')
@@ -22,12 +22,14 @@ class ManagerTest extends \PHPUnit_Framework_TestCase
         $this->manager = new StreamLaravelManager('key', 'secret', $config);
     }
 
-    public function testDefaultTimeout(){
+    public function testDefaultTimeout()
+    {
         $client = $this->manager->getClient();
         $this->assertSame($client->timeout, 3);
     }
 
-    public function testCustomTimeout(){
+    public function testCustomTimeout()
+    {
         parent::setUp();
         $config = m::mock('ConfigMock');
         $config->shouldReceive('get')->once()->with('stream-laravel::user_feed')
@@ -47,7 +49,8 @@ class ManagerTest extends \PHPUnit_Framework_TestCase
     }
 
 
-    public function testGetUserFeed(){
+    public function testGetUserFeed()
+    {
         $feed = $this->manager->getUserFeed(42);
         $this->assertSame($feed->getId(), 'user:42');
     }
@@ -86,5 +89,4 @@ class ManagerTest extends \PHPUnit_Framework_TestCase
     public function testActivityDeleted()
     {
     }
-
 }
