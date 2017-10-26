@@ -1,12 +1,9 @@
 <?php
 
 use GetStream\StreamLaravel\EnrichedActivity;
-use Mockery as m;
-
 
 class EnrichedActivityTest extends \PHPUnit_Framework_TestCase
 {
-
     public function testArrayImplementation()
     {
         $activity = new EnrichedActivity(array('actor' => 'stream'));
@@ -39,5 +36,4 @@ class EnrichedActivityTest extends \PHPUnit_Framework_TestCase
         }
         $this->assertSame($sum, 4);
     }
-
 }

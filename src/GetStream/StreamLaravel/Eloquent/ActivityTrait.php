@@ -60,7 +60,8 @@ trait ActivityTrait
 
     /**
      * The reference to the model instance of the author/owner
-     * @return object \Illuminate\Database\Eloquent\Model instance
+     *
+     * @return string
      */
     public function activityActor()
     {
@@ -80,6 +81,7 @@ trait ActivityTrait
 
     /**
      * The activity object for this instance
+     *
      * @return string
      */
     public function activityObject()
@@ -89,6 +91,7 @@ trait ActivityTrait
 
     /**
      * The activity foreign_id for this instance
+     *
      * @return string
      */
     public function activityForeignId()
@@ -98,6 +101,7 @@ trait ActivityTrait
 
     /**
      * The activity time for this instance
+     *
      * @return string
      */
     public function activityTime()
@@ -107,7 +111,8 @@ trait ActivityTrait
 
     /**
      * The feeds that should receive a copy of this instance when it's created
-     * @return GetStream\Stream\Feed[]
+     *
+     * @return \GetStream\Stream\Feed[]
      */
     public function activityNotify()
     {
@@ -116,7 +121,8 @@ trait ActivityTrait
 
     /**
      * The activity data for this instance
-     * @return array[string]string
+     *
+     * @return array
      */
     public function createActivity()
     {
@@ -147,5 +153,4 @@ trait ActivityTrait
 
         return $activity;
     }
-
 }

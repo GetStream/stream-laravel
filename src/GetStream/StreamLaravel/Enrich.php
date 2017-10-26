@@ -1,21 +1,23 @@
-<?php namespace GetStream\StreamLaravel;
+<?php
 
-use GetStream\StreamLaravel\EnrichedActivity;
-use GetStream\StreamLaravel\Exceptions\MissingDataException;
+namespace GetStream\StreamLaravel;
 
-class Enrich {
+use Carbon\Carbon;
 
-    private $fields = array();
+class Enrich
+{
+    private $fields = [];
+    private $withTrashed;
 
-    public function __construct($fields = array('actor', 'object'), $withTrashed = true)
+    public function __construct($fields = ['actor', 'object'], $withTrashed = true)
     {
         $this->fields = $fields;
         $this->withTrashed = $withTrashed;
     }
 
-    public function fromDb($model, $ids, $with=array())
+    public function fromDb($model, $ids, $with = [])
     {
-        $results = array();
+        $results = [];
         $pkName = (new $model())->getKeyName();
         $query = $model::with($with)->whereIn($pkName, $ids);
         if (in_array('Illuminate\Database\Eloquent\SoftDeletingTrait', class_uses(get_class($model))) && $this->withTrashed) // previous withTrash method deprecated in Laravel 4.2
@@ -29,7 +31,7 @@ class Enrich {
 
     private function collectReferences($activities)
     {
-        $model_references = array();
+        $model_references = [];
         foreach ($activities as $key => $activity) {
             foreach ($activity as $field=>$value) {
                 if ($value === null) {
@@ -46,10 +48,10 @@ class Enrich {
 
     private function retrieveObjects($references)
     {
-        $objects = array();
+        $objects = [];
         foreach ($references as $content_type => $content_ids) {
             $content_type_model = new $content_type;
-            $with = array();
+            $with = [];
             if (method_exists($content_type_model, 'activityLazyLoading')) {
                 $with = $content_type_model->activityLazyLoading();
             }
@@ -61,10 +63,11 @@ class Enrich {
 
     private function wrapActivities($activities)
     {
-        $wrappedActivities = array();
-        foreach ($activities as $i => $activity) {
+        $wrappedActivities = [];
+        foreach ($activities as $activity) {
             $wrappedActivities[] = new EnrichedActivity($activity);
         }
+
         return $wrappedActivities;
     }
 
@@ -114,17 +117,16 @@ class Enrich {
             return $aggregatedActivities;
         }
 
-        $references = array();
+        $references = [];
         foreach ($aggregatedActivities as $aggregated) {
             $references = array_replace_recursive($references, $this->collectReferences($aggregated['activities']));
         }
 
         $objects = $this->retrieveObjects($references);
         foreach ($aggregatedActivities as $key => $aggregated) {
-            $aggregatedActivities[$key]['updated_at'] = new \Carbon\Carbon($aggregatedActivities[$key]['updated_at']);
+            $aggregatedActivities[$key]['updated_at'] = new Carbon($aggregatedActivities[$key]['updated_at']);
             $this->injectObjects($aggregatedActivities[$key]['activities'], $objects);
         }
         return $aggregatedActivities;
     }
-
 }

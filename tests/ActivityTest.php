@@ -1,9 +1,7 @@
 <?php
 
-use GetStream\StreamLaravel\StreamLaravelManager;
 use GetStream\StreamLaravel\Eloquent\Activity;
 use GetStream\Stream\Feed;
-use Mockery as m;
 
 class _Activity extends Activity
 {
