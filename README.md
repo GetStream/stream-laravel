@@ -1,7 +1,7 @@
 # Stream Laravel
 [![Build Status](https://travis-ci.org/GetStream/stream-laravel.svg?branch=master)](https://travis-ci.org/GetStream/stream-laravel) [![PHP version](https://badge.fury.io/ph/get-stream%2Fstream-laravel.svg)](http://badge.fury.io/ph/get-stream%2Fstream-laravel)
 
-[stream-laravel](https://github.com/GetStream/stream-laravel) is a Laravel client for [Stream](https://getstream.io/).
+[stream-laravel](https://github.com/GetStream/stream-laravel) is a Laravel client for [Stream](https://getstream.io/). You can use this in any Laravel application, or in any application that uses Eloquent ORM ([`illuminate/database`](https://packagist.org/packages/illuminate/database)) as a standalone ORM.
 
 You can sign up for a Stream account at https://getstream.io/get_started.
 
