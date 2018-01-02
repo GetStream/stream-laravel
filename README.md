@@ -150,10 +150,10 @@ return [
     |-----------------------------------------------------------------------------
     |
     */
-    'news_feeds' => array(
+    'news_feeds' => [
         'timeline' => 'timeline',
         'timeline_aggregated' => 'timeline_aggregated',
-    )
+    ]
 ```
 
 And that should get you off and running with Stream-Laravel. Have lots of fun!
@@ -221,7 +221,7 @@ class Pin extends Eloquent {
 
     public function activityExtraData()
     {
-        return array('is_retweet'=>$this->is_retweet);
+        return ['is_retweet' => $this->is_retweet];
     }
 ```
 
@@ -281,7 +281,7 @@ class Tweet extends Eloquent {
     {
         if ($this->isRetweet) {
             $targetFeed = FeedManager::getNotificationFeed($this->parent->user->id);
-            return array($targetFeed);
+            return [$targetFeed];
         }
     }
 ```
@@ -300,7 +300,7 @@ class Follow extends Eloquent {
     public function activityNotify()
     {
         $targetFeed = FeedManager::getNotificationFeed($this->target->id);
-        return array($targetFeed);
+        return [$targetFeed];
     }
 ```
 
@@ -331,7 +331,7 @@ $enricher = new Enrich();
 $feed = FeedManager::getNewsFeeds(Auth::id())['timeline'];
 $activities = $feed->getActivities(0,25)['results'];
 $activities = $enricher->enrichActivities($activities);
-return View::make('feed', array('activities'=> $activities));
+return View::make('feed', ['activities' => $activities]);
 ```
 
 
@@ -346,7 +346,7 @@ For convenience we includes a basic view:
     <div class="container">
         <div class="container-pins">
             @foreach ($activities as $activity)
-                @include('stream-laravel::render_activity', array('activity'=>$activity))
+                @include('stream-laravel::render_activity', ['activity' => $activity])
             @endforeach
         </div>
     </div>
@@ -361,7 +361,7 @@ If you need to support different kind of templates for the same activity, you ca
 
 The example below will use the view activity/homepage_like.html
 ```
-@include('stream-laravel::render_activity', array('activity'=>$activity, 'prefix'=>'homepage'))
+@include('stream-laravel::render_activity', ['activity' => $activity, 'prefix' => 'homepage'])
 ```
 
 
@@ -383,11 +383,11 @@ class Pin extends Eloquent {
     public function activityExtraData()
     {
         $ref = Utils::createModelReference($this->parentTweet);
-        return array('parent_tweet' => $ref);
+        return ['parent_tweet' => $ref];
     }
 
 // tell the enricher to enrich parent_tweet
-$enricher = new Enrich(array('actor', 'object', 'parent_tweet'));
+$enricher = new Enrich(['actor', 'object', 'parent_tweet']);
 $activities = $feed->getActivities(0,25)['results'];
 $activities = $enricher->enrichActivities($activities);
 ```
@@ -402,7 +402,7 @@ class Pin extends Eloquent {
 
     public function activityLazyLoading()
     {
-        return array('user');
+        return ['user'];
     }
 ```
 
