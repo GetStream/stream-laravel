@@ -75,6 +75,44 @@ return array(
 )
 ```
 
+###Lumen Installation
+
+Begin by installing this package through Composer. Edit your project's composer.json file to require get-stream/stream-laravel.
+
+```
+"require": {
+    "get-stream/stream-laravel": "dev-master"
+},
+```
+
+Next, update Composer
+
+```
+composer update
+```
+
+Add ```'GetStream\StreamLaravel\StreamLumenServiceProvider'``` to the list of providers in ```bootstrap/app.php```
+
+```
+    $app->register(\GetStream\StreamLaravel\StreamLumenServiceProvider::class);
+```
+
+Manually create a config folder in ./config/stream-laravel.php and load it inside your bootstrap
+
+```php
+return array(
+    'api_key' => 'API_KEY',
+    'api_secret' => 'API_SECRET',
+    'api_app_id' => 'API_APP_ID',
+    'location' => 'us-east',
+    'timeout' => 3,
+)
+```
+
+```
+    $app->configure('stream-laravel');
+```
+
 ###Eloquent integration
 
 Stream laravel instant integration with Eloquent models;extending the ```GetStream\StreamLaravel\Eloquent\Activity``` class will give you automatic tracking of your models to user feeds. 
