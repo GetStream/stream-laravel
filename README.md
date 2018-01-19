@@ -158,6 +158,40 @@ return [
 
 And that should get you off and running with Stream-Laravel. Have lots of fun!
 
+### Lumen Installation
+
+Begin by installing this package through Composer.
+
+```
+composer require get-stream/stream-laravel
+```
+
+Add `'GetStream\StreamLaravel\StreamLumenServiceProvider'` to the list of providers in `bootstrap/app.php`
+
+```php
+$app->register(\GetStream\StreamLaravel\StreamLumenServiceProvider::class);
+```
+
+Manually create a config file in ./config/stream-laravel.php...
+
+```php
+<?php
+
+return [
+    'api_key' => 'API_KEY',
+    'api_secret' => 'API_SECRET',
+    'api_app_id' => 'API_APP_ID',
+    'location' => 'us-east',
+    'timeout' => 3,
+];
+```
+
+and tell Lumen to configure it, in bootstrap.
+
+```php
+$app->configure('stream-laravel');
+```
+
 # Features of Stream-Laravel
 
 ## Eloquent Integration
