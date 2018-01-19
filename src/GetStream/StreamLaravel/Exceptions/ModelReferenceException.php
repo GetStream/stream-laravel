@@ -1,4 +1,9 @@
-<?php namespace GetStream\StreamLaravel\Exceptions;
+<?php
 
-class ModelReferenceException extends \Exception {
+namespace GetStream\StreamLaravel\Exceptions;
+
+use Exception;
+
+class ModelReferenceException extends Exception
+{
 }

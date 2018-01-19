@@ -1,4 +1,9 @@
-<?php namespace GetStream\StreamLaravel\Exceptions;
+<?php
 
-class MissingDataException extends \Exception {
+namespace GetStream\StreamLaravel\Exceptions;
+
+use Exception;
+
+class MissingDataException extends Exception
+{
 }

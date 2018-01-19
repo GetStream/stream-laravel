@@ -1,8 +1,21 @@
-<?php namespace GetStream\StreamLaravel\Eloquent;
+<?php
 
-trait ActivityTrait {
+namespace GetStream\StreamLaravel\Eloquent;
 
+trait ActivityTrait
+{
+    /**
+     * @var string
+     */
     protected static $activitySyncPolicy = '\GetStream\StreamLaravel\Eloquent\CreateRemoveObserver';
+
+    /**
+     *  Boot Observer
+     */
+    public static function bootActivityTrait()
+    {
+        static::observe(new static::$activitySyncPolicy);
+    }
 
     /**
      * Returns an array of relations as strings or functions that tell the enrich
@@ -12,7 +25,7 @@ trait ActivityTrait {
      */
     public function activityLazyLoading()
     {
-        return array();
+        return [];
     }
 
     /**
@@ -41,16 +54,19 @@ trait ActivityTrait {
     public function activityActorId()
     {
         $actor = $this->{$this->activityActorMethodName()};
+
         return $actor->id;
     }
 
     /**
      * The reference to the model instance of the author/owner
-     * @return object \Illuminate\Database\Eloquent\Model instance
+     *
+     * @return string
      */
     public function activityActor()
     {
         $actor = $this->{$this->activityActorMethodName()};
+
         return Utils::createModelReference($actor);
     }
 
@@ -65,6 +81,7 @@ trait ActivityTrait {
 
     /**
      * The activity object for this instance
+     *
      * @return string
      */
     public function activityObject()
@@ -74,6 +91,7 @@ trait ActivityTrait {
 
     /**
      * The activity foreign_id for this instance
+     *
      * @return string
      */
     public function activityForeignId()
@@ -83,6 +101,7 @@ trait ActivityTrait {
 
     /**
      * The activity time for this instance
+     *
      * @return string
      */
     public function activityTime()
@@ -92,7 +111,8 @@ trait ActivityTrait {
 
     /**
      * The feeds that should receive a copy of this instance when it's created
-     * @return GetStream\Stream\Feed[]
+     *
+     * @return \GetStream\Stream\Feed[]
      */
     public function activityNotify()
     {
@@ -101,11 +121,12 @@ trait ActivityTrait {
 
     /**
      * The activity data for this instance
-     * @return array[string]string
+     *
+     * @return array
      */
     public function createActivity()
     {
-        $activity = array();
+        $activity = [];
         $activity['actor'] = $this->activityActor();
         $activity['verb'] = $this->activityVerb();
         $activity['object'] = $this->activityObject();
@@ -113,24 +134,23 @@ trait ActivityTrait {
         $activity['time'] = $this->activityTime();
 
         $to = $this->activityNotify();
-        if ($to !== null){
-            $activity['to'] = array();
-            foreach ($to as $feed) {
+
+        if ( $to !== null )
+        {
+            $activity['to'] = [];
+            foreach ( $to as $feed )
+            {
                 $activity['to'][] = $feed->getId();
             }
         }
 
         $extra_data = $this->activityExtraData();
-        if ($extra_data !== null){
+
+        if ( $extra_data !== null )
+        {
             $activity = array_merge($activity, $extra_data);
         }
+
         return $activity;
     }
-
-    public static function boot()
-    {
-        parent::boot();
-        static::observe(new static::$activitySyncPolicy);
-    }
-
 }

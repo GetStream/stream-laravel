@@ -1,8 +1,15 @@
-<?php namespace GetStream\StreamLaravel;
+<?php
 
-class EnrichedActivity implements \ArrayAccess, \IteratorAggregate {
-    private $activityData = array();
-    private $notEnrichedData = array();
+namespace GetStream\StreamLaravel;
+
+use ArrayAccess;
+use ArrayIterator;
+use IteratorAggregate;
+
+class EnrichedActivity implements ArrayAccess, IteratorAggregate
+{
+    private $activityData = [];
+    private $notEnrichedData = [];
 
     public function __construct($activityData)
     {
@@ -50,8 +57,8 @@ class EnrichedActivity implements \ArrayAccess, \IteratorAggregate {
     }
 
     // Support iteration over private activityData array
-    public function getIterator() {
-        return new \ArrayIterator($this->activityData);
+    public function getIterator()
+    {
+        return new ArrayIterator($this->activityData);
     }
-
 }

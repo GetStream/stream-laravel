@@ -1,7 +1,10 @@
-<?php namespace GetStream\StreamLaravel\Eloquent;
+<?php
 
-use \Illuminate\Database\Eloquent\Model;
+namespace GetStream\StreamLaravel\Eloquent;
 
-abstract class Activity extends Model {
+use Illuminate\Database\Eloquent\Model;
+
+abstract class Activity extends Model
+{
     use ActivityTrait;
 }

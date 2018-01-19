@@ -1,121 +1,202 @@
-##Stream Laravel
+# Stream Laravel
 [![Build Status](https://travis-ci.org/GetStream/stream-laravel.svg?branch=master)](https://travis-ci.org/GetStream/stream-laravel) [![PHP version](https://badge.fury.io/ph/get-stream%2Fstream-laravel.svg)](http://badge.fury.io/ph/get-stream%2Fstream-laravel)
 
-This package helps you create activity streams & newsfeeds with Laravel and [GetStream.io](https://getstream.io).
+[stream-laravel](https://github.com/GetStream/stream-laravel) is a Laravel client for [Stream](https://getstream.io/). You can use this in any Laravel application, or in any application that uses Eloquent ORM ([`illuminate/database`](https://packagist.org/packages/illuminate/database)) as a standalone ORM.
 
-###Build activity streams & news feeds
+You can sign up for a Stream account at https://getstream.io/get_started.
+
+Note there is also a lower level [PHP - Stream integration](https://github.com/getstream/stream-php) library which is suitable for all PHP applications.
+
+## Build Activity Streams, News Feeds, and More
 
 ![](https://dvqg2dogggmn6.cloudfront.net/images/mood-home.png)
 
 You can build:
 
-* Activity streams such as seen on Github
-* A twitter style newsfeed
-* A feed like instagram/ pinterest
-* Facebook style newsfeeds
-* A notification system
+* Activity Streams - like the one seen on GitHub
+* A Twitter-like feed
+* Instagram / Pinterest Photo Feeds
+* Facebook-style newsfeeds
+* A Notification System
+* Lots more...
 
-### Demo
+## Demo
 
-You can check out our example app built using this library on Github [https://github.com/GetStream/Stream-Example-PHP/](https://github.com/GetStream/Stream-Example-PHP/)
+### Laravel 5.2
 
-###Table of Contents
+[New Laravel 5.2 Example Application is here!](https://github.com/GetStream/Stream-Laravel-Example)
+
+### Laravel 5, 4
+
+You can check out our example application for Laravel 5.0 and Laravel 4 built using this library: [https://github.com/GetStream/Stream-Example-PHP/](https://github.com/GetStream/Stream-Example-PHP/)
 
 
-###Installation
+## Installation
 
-Begin by installing this package through Composer. Edit your project's composer.json file to require get-stream/stream-laravel.
+### Composer
+
+***Begin by installing this package through Composer. Edit your project's ```composer.json``` file to require ```get-stream/stream-laravel```:***
 
 ```
 "require": {
-    "get-stream/stream-laravel": "~2.1"
+    "get-stream/stream-laravel": "~2.2.6"
 },
 ```
 
-Next, update Composer
+***Next, update Composer:***
 
 ```
 composer update
 ```
 
-Add ```'GetStream\StreamLaravel\StreamLaravelServiceProvider'``` to the list of providers in ```conf/app.php```
+### Laravel
+
+**Laravel prior to 5.5**
+
+Add `'GetStream\StreamLaravel\StreamLaravelServiceProvider'` to your list of providers in `config/app.php`:
 
 ```
-    'providers' => array(
-        'GetStream\StreamLaravel\StreamLaravelServiceProvider',
-        ...
-    ),
+'providers' => [
+    GetStream\StreamLaravel\StreamLaravelServiceProvider::class,
+    ...
+],
 ```
 
-Add FeedManager facade ```'GetStream\StreamLaravel\Facades\FeedManager'``` to list of aliases in ```conf/app.php```
+And add the `FeedManager` facade `'GetStream\StreamLaravel\Facades\FeedManager'` to your list of aliases in `config/app.php`:
 
 ```
-    'aliases' => array(
-        'FeedManager'       => 'GetStream\StreamLaravel\Facades\FeedManager',
-        ...
-    ),
+'aliases' => [
+    'FeedManager' => GetStream\StreamLaravel\Facades\FeedManager::class,
+    ...
+],
 ```
 
-Publish the configuration file
+***Publish the configuration file:***
 
 ```
 php artisan vendor:publish --provider="GetStream\StreamLaravel\StreamLaravelServiceProvider"
 ```
 
-Login with Github on getstream.io and set ```api_key``` and ```api_secret``` in the stream-laravel config file as their are shown in your dashboard.
+This will create ```config/stream-laravel.php```. We will set our credentials after they are created in the Stream Dashboard.
 
-for example:
+### GetStream.io Dashboard
+
+***Now, login to [GetStream.io](https://getstream.io) and create an application in the dashboard.***
+
+***Retrieve the API key, API secret, and API app id, which are shown in your dashboard.***
+
+***Create feeds in your new application. By default, you should create the following:***
+
+- *user* which is a _flat_ feed.
+- *timeline* which is a _flat_ feed.
+- *timeline_aggregrated* which is an _aggregated_ feed.
+- *notification* which is a _notification_ feed.
+
+
+### Stream-Laravel Config File
+
+***Set your key, secret, and app id in ```config/stream-laravel.php``` file as their are shown in your dashboard. Also set the location for good measure. For example:***
+
+```
+return [
+
+    /*
+    |-----------------------------------------------------------------------------
+    | Your GetStream.io API credentials (you can them from getstream.io/dashboard)
+    |-----------------------------------------------------------------------------
+    |
+    */
+
+    'api_key' => '[API KEY HERE]',
+    'api_secret' => '[API SECRET HERE]',
+    'api_app_id' => '[API APP ID HERE]',
+    /*
+    |-----------------------------------------------------------------------------
+    | Client connection options
+    |-----------------------------------------------------------------------------
+    |
+    */
+    'location' => 'us-east',
+    'timeout' => 3,
+    /*
+    |-----------------------------------------------------------------------------
+    | The default feed manager class
+    |-----------------------------------------------------------------------------
+    |
+    */
+
+```
+
+***You can also set the name of your feeds here:***
+
+```
+/*
+    |-----------------------------------------------------------------------------
+    | The feed that keeps content created by its author
+    |-----------------------------------------------------------------------------
+    |
+    */
+    'user_feed' => 'user',
+    /*
+    |-----------------------------------------------------------------------------
+    | The feed containing notification activities
+    |-----------------------------------------------------------------------------
+    |
+    */
+    'notification_feed' => 'notification',
+    /*
+    |-----------------------------------------------------------------------------
+    | The feeds that shows activities from followed user feeds
+    |-----------------------------------------------------------------------------
+    |
+    */
+    'news_feeds' => [
+        'timeline' => 'timeline',
+        'timeline_aggregated' => 'timeline_aggregated',
+    ]
+```
+
+And that should get you off and running with Stream-Laravel. Have lots of fun!
+
+### Lumen Installation
+
+Begin by installing this package through Composer.
+
+```
+composer require get-stream/stream-laravel
+```
+
+Add `'GetStream\StreamLaravel\StreamLumenServiceProvider'` to the list of providers in `bootstrap/app.php`
+
 ```php
-return array(
+$app->register(\GetStream\StreamLaravel\StreamLumenServiceProvider::class);
+```
+
+Manually create a config file in ./config/stream-laravel.php...
+
+```php
+<?php
+
+return [
     'api_key' => 'API_KEY',
     'api_secret' => 'API_SECRET',
     'api_app_id' => 'API_APP_ID',
     'location' => 'us-east',
     'timeout' => 3,
-)
+];
 ```
 
-###Lumen Installation
-
-Begin by installing this package through Composer. Edit your project's composer.json file to require get-stream/stream-laravel.
-
-```
-"require": {
-    "get-stream/stream-laravel": "dev-master"
-},
-```
-
-Next, update Composer
-
-```
-composer update
-```
-
-Add ```'GetStream\StreamLaravel\StreamLumenServiceProvider'``` to the list of providers in ```bootstrap/app.php```
-
-```
-    $app->register(\GetStream\StreamLaravel\StreamLumenServiceProvider::class);
-```
-
-Manually create a config folder in ./config/stream-laravel.php and load it inside your bootstrap
+and tell Lumen to configure it, in bootstrap.
 
 ```php
-return array(
-    'api_key' => 'API_KEY',
-    'api_secret' => 'API_SECRET',
-    'api_app_id' => 'API_APP_ID',
-    'location' => 'us-east',
-    'timeout' => 3,
-)
+$app->configure('stream-laravel');
 ```
 
-```
-    $app->configure('stream-laravel');
-```
+# Features of Stream-Laravel
 
-###Eloquent integration
+## Eloquent Integration
 
-Stream laravel instant integration with Eloquent models;extending the ```GetStream\StreamLaravel\Eloquent\Activity``` class will give you automatic tracking of your models to user feeds. 
+Stream-Laravel provides instant integration with Eloquent models - extending the ```GetStream\StreamLaravel\Eloquent\Activity``` class will give you automatic tracking of your models to user feeds.
 
 For example:
 
@@ -128,12 +209,14 @@ class Pin extends Eloquent {
 
 Everytime a Pin is created it will be stored in the feed of the user that created it, and when a Pin instance is deleted than it will get removed as well.
 
-####Activity fields
+Automatically!
 
-Models are stored in feeds as activities. An activity is composed of at least the following data fields: **actor**, **verb**, **object**, **time**. You can also add more custom data if needed.  
+### Activity Fields
 
-**object** is a reference to the model instance itself  
-**actor** is a reference to the user attribute of the instance  
+Models are stored in feeds as activities. An activity is composed of at least the following data fields: **actor**, **verb**, **object**, **time**. You can also add more custom data if needed.
+
+**object** is a reference to the model instance itself
+**actor** is a reference to the user attribute of the instance
 **verb** is a string representation of the class name
 
 In order to work out-of-the-box the Activity class makes makes few assumptions:
@@ -160,9 +243,9 @@ class Pin extends Eloquent {
     }
 ```
 
-####Activity extra data
+### Activity Extra Data
 
-Often you'll want to store more data than just the basic fields. You achieve this by implementing the ```activityExtraData``` method in the model.
+Often, you'll want to store more data than just the basic fields. You achieve this by implementing the ```activityExtraData``` method in the model.
 
 NOTE: you should only return data that can be serialized by PHP's json_encode function
 
@@ -172,11 +255,11 @@ class Pin extends Eloquent {
 
     public function activityExtraData()
     {
-        return array('is_retweet'=>$this->is_retweet);
+        return ['is_retweet' => $this->is_retweet];
     }
 ```
 
-####Customize activity verb
+### Customize Activity Verb
 
 By default, the verb field is the class name of the activity, you can change that implementing the `activityVerb` method.
 
@@ -191,33 +274,32 @@ class Pin extends Eloquent {
 
 ```
 
-###Feed manager
+## Feed Manager
 
-Stream Laravel comes with a FeedManager class that helps with all common feed operations. You can get an instance of the manager with ```FeedManager``` if you defined the facade alias (see above in the install) or with ```App::make('feed_manager')``` if you did not.
+Stream Laravel comes with a FeedManager class that helps with all common feed operations. You can get an instance of the manager with ```FeedManager``` if you defined the facade alias (see above in the install), or with ```App::make('feed_manager')``` if you did not.
 
-####Feeds bundled with feed_manager
+## Pre-Bundled Feeds
 
-To get you started the manager has 4 feeds pre configured. You can add more feeds if your application needs it.
-The three feeds are divided in three categories.
+To get you started the manager has feeds pre configured. You can add more feeds if your application needs it. The three feeds are divided in three categories.
 
-#####User feed:
-The user feed stores all activities for a user. Think of it as your personal Facebook page. You can easily get this feed from the manager.  
+### User Feed:
+The user feed stores all activities for a user. Think of it as your personal Facebook page. You can easily get this feed from the manager.
 ```php
 $feed = FeedManager::getUserFeed($user->id);
-```  
-#####News feeds:
-The news feeds store the activities from the people you follow. 
-There is both a flat newsfeed (similar to twitter) and an aggregated newsfeed (like facebook).
+```
+### News Feed:
+The news feeds store the activities from the people you follow.
+There is both a timeline (similar to twitter) and an aggregated timeline (like facebook).
 
 ```php
-$flatFeed = FeedManager::getNewsFeed($user->id)['flat'];
-$aggregatedFeed = FeedManager::getNewsFeed($user->id)['aggregated'];
+$timelineFeed = FeedManager::getNewsFeed($user->id)['timeline'];
+$aggregatedTimelineFeed = FeedManager::getNewsFeed($user->id)['timeline_aggregated'];
 ```
-#####Notification feed:
-The notification feed can be used to build notification functionality. 
+### Notification Feed:
+The notification feed can be used to build notification functionality.
 
 ![Notification feed](http://feedly.readthedocs.org/en/latest/_images/fb_notification_system.png)
-  
+
 Below we show an example of how you can read the notification feed.
 ```php
 notification_feed = FeedManager::getNotificationFeed($user->id);
@@ -233,7 +315,7 @@ class Tweet extends Eloquent {
     {
         if ($this->isRetweet) {
             $targetFeed = FeedManager::getNotificationFeed($this->parent->user->id);
-            return array($targetFeed);
+            return [$targetFeed];
         }
     }
 ```
@@ -252,21 +334,21 @@ class Follow extends Eloquent {
     public function activityNotify()
     {
         $targetFeed = FeedManager::getNotificationFeed($this->target->id);
-        return array($targetFeed);
+        return [$targetFeed];
     }
 ```
 
 
-####Follow a feed
-The create the newsfeeds you need to notify the system about follow relationships. The manager comes with APIs to let a user's news feeds follow another user's feed. This code lets the current user's flat and aggregated feeds follow the target_user's personal feed.
+## Follow Feed
+The create the newsfeeds you need to notify the system about follow relationships. The manager comes with APIs to let a user's news feeds follow another user's feed. This code lets the current user's timeline and timeline_aggregated feeds follow the target_user's personal feed.
 
 ```
 FeedManager::followUser($userId, $targetId);
 ```
 
-### Showing the newsfeed
+## Displaying the Newsfeed
 
-####Activity enrichment
+### Activity Enrichment
 
 When you read data from feeds, a like activity will look like this:
 
@@ -279,16 +361,16 @@ This is far from ready for usage in your template. We call the process of loadin
 ```
 use GetStream\StreamLaravel\Enrich;
 
-enricher = Enrich();
-$feed = FeedManager::getNewsFeeds(Auth::id())['flat'];
+$enricher = new Enrich();
+$feed = FeedManager::getNewsFeeds(Auth::id())['timeline'];
 $activities = $feed->getActivities(0,25)['results'];
 $activities = $enricher->enrichActivities($activities);
-return View::make('feed', array('activities'=> $activities));
-``` 
+return View::make('feed', ['activities' => $activities]);
+```
 
 
 
-####Templating
+### Templating
 
 Now that you've enriched the activities you can render them in a view.
 For convenience we includes a basic view:
@@ -298,7 +380,7 @@ For convenience we includes a basic view:
     <div class="container">
         <div class="container-pins">
             @foreach ($activities as $activity)
-                @include('stream-laravel::render_activity', array('activity'=>$activity))
+                @include('stream-laravel::render_activity', ['activity' => $activity])
             @endforeach
         </div>
     </div>
@@ -309,21 +391,21 @@ The ```stream-laravel::render_activity``` view tag will render the view activity
 
 For example activity/tweet.blade.php will be used to render an normal activity with verb tweet and aggregated_activity/like.blade.php for an aggregated activity with verb like
 
-If you need to support different kind of templates for the same activity, you can send a third parameter to change the view selection.  
+If you need to support different kind of templates for the same activity, you can send a third parameter to change the view selection.
 
 The example below will use the view activity/homepage_like.html
 ```
-@include('stream-laravel::render_activity', array('activity'=>$activity, 'prefix'=>'homepage'))
+@include('stream-laravel::render_activity', ['activity' => $activity, 'prefix' => 'homepage'])
 ```
 
 
-###Customizing enrichment
+### Customizing Enrichment
 
 Sometimes you'll want to customize how enrichment works. The documentation will show you several common options.
 
-####Enrich extra fields
+### Enrich Extra Fields
 
-If you store references to model instances in the activity extra_data you can use the Enrich class to take care of it for you
+If you store references to model instances in the activity extra_data you can use the Enrich class to take care of it for you:
 
 ```
 use \Illuminate\Database\Eloquent\Model;
@@ -335,16 +417,16 @@ class Pin extends Eloquent {
     public function activityExtraData()
     {
         $ref = Utils::createModelReference($this->parentTweet);
-        return array('parent_tweet' => $ref);
+        return ['parent_tweet' => $ref];
     }
 
 // tell the enricher to enrich parent_tweet
-$enricher = new Enrich(array('actor', 'object', 'parent_tweet'));
+$enricher = new Enrich(['actor', 'object', 'parent_tweet']);
 $activities = $feed->getActivities(0,25)['results'];
 $activities = $enricher->enrichActivities($activities);
 ```
 
-####Preload related data
+### Preload Related Data
 
 You will commonly access related objects such as activity['object']->user. To prevent your newsfeed to run N queries you can instruct the manager to load related objects. The manager will use Eloquent's ```With``` functionality.
 
@@ -354,16 +436,21 @@ class Pin extends Eloquent {
 
     public function activityLazyLoading()
     {
-        return array('user');
+        return ['user'];
     }
 ```
 
-###Low level APIs access
-When needed you can also use the low level PHP client API directly.
-The full explanation can be found in the [getstream.io documentation](https://getstream.io/docs/).
+### Full documentation and Low level APIs access
 
+When needed you can also use the [low level PHP API](https://github.com/getstream/stream-php) directly. Documentation is available at the [Stream website](https://getstream.io/docs/?language=php).
 
 ```
 $specialFeed = FeedManager::getClient->feed('special', '42')
-$specialFeed->followFeed('flat', '60')
+$specialFeed->followFeed('timeline', '60')
 ```
+
+### Copyright and License Information
+
+Copyright (c) 2014-2017 Stream.io Inc, and individual contributors. All rights reserved.
+
+See the file "LICENSE" for information on the history of this software, terms & conditions for usage, and a DISCLAIMER OF ALL WARRANTIES.
