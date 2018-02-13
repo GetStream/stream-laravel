@@ -3,7 +3,7 @@
     "description": "Build newsfeeds and activity feeds on Laravel using getstream.io",
     "homepage": "https://getstream.io/",
     "keywords": ["getstream", "activity", "newsfeed", "activity feed", "notification feed", "aggregated feed"],
-    "license": "MIT",
+    "license": "BSD-3-Clause",
     "authors": [
         {
             "name": "Tommaso Barbugli",
