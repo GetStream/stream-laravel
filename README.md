@@ -89,7 +89,7 @@ This will create ```config/stream-laravel.php```. We will set our credentials af
 
 - *user* which is a _flat_ feed.
 - *timeline* which is a _flat_ feed.
-- *timeline_aggregrated* which is an _aggregated_ feed.
+- *timeline_aggregated* which is an _aggregated_ feed.
 - *notification* which is a _notification_ feed.
 
 
@@ -219,7 +219,7 @@ Models are stored in feeds as activities. An activity is composed of at least th
 **actor** is a reference to the user attribute of the instance
 **verb** is a string representation of the class name
 
-In order to work out-of-the-box the Activity class makes makes few assumptions:
+In order to work out-of-the-box the Activity class makes few assumptions:
 
 1. the Model class belongs to a user
 2. the model table has timestamp columns (created_at is required)
@@ -340,7 +340,7 @@ class Follow extends Eloquent {
 
 
 ## Follow Feed
-The create the newsfeeds you need to notify the system about follow relationships. The manager comes with APIs to let a user's news feeds follow another user's feed. This code lets the current user's timeline and timeline_aggregated feeds follow the target_user's personal feed.
+To create the newsfeeds you need to notify the system about follow relationships. The manager comes with APIs to let a user's news feeds follow another user's feed. This code lets the current user's timeline and timeline_aggregated feeds follow the target_user's personal feed.
 
 ```
 FeedManager::followUser($userId, $targetId);
