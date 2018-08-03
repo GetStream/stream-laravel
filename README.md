@@ -292,8 +292,8 @@ The news feeds store the activities from the people you follow.
 There is both a timeline (similar to twitter) and an aggregated timeline (like facebook).
 
 ```php
-$timelineFeed = FeedManager::getNewsFeed($user->id)['timeline'];
-$aggregatedTimelineFeed = FeedManager::getNewsFeed($user->id)['timeline_aggregated'];
+$timelineFeed = FeedManager::getNewsFeeds($user->id)['timeline'];
+$aggregatedTimelineFeed = FeedManager::getNewsFeeds($user->id)['timeline_aggregated'];
 ```
 ### Notification Feed:
 The notification feed can be used to build notification functionality.
@@ -368,6 +368,52 @@ $activities = $enricher->enrichActivities($activities);
 return View::make('feed', ['activities' => $activities]);
 ```
 
+The enrich method returns an array of objects of type ```EnrichedActivity``` which you can also parse yourself.  For example, in an API where you are using ```spatie/laravel-fractal``` you could use a loop like the following in your Controller to return json to your api.
+
+On your model:
+```php
+use App\Transformers\MyModelEnrichTransformer;
+use GetStream\StreamLaravel\Eloquent\ActivityTrait;
+use Illuminate\Database\Eloquent\Model;
+
+class MyModel extends Model
+{
+    public function enrichTransformer() {
+        return new MyModelEnrichTransformer();
+    }
+}
+```
+
+In your controller:
+```php
+use GetStream\StreamLaravel\Enrich;
+$feed = FeedManager::getNewsFeeds($user->id)['timeline'];
+$enricher = new Enrich();
+$activities = $feed->getActivities(0, 25)['results'];
+$activities = $enricher->enrichActivities($activities);
+
+$collection = new Collection();
+foreach ($activities as $activity) {
+    $record = [
+        "actor" => $this->transformData($activity["actor"], $activity["actor"]->enrichTransformer()),
+        "object" => $this->transformData($activity["object"], $activity["object"]->enrichTransformer()),
+        "verb" => $activity["verb"],
+        "foreign_id" => $activity["foreign_id"],
+        "time" => $activity["time"],
+    ];
+
+    if (!empty($activity["target"])) {
+        array_push($record, [
+            "target" => $this->transformData($activity["target"], $activity["target"]->enrichTransformer()),
+        ]);
+    }
+
+    $collection->push($record);
+}
+
+return response()->json($collection);
+
+```
 
 
 ### Templating
