@@ -39,7 +39,7 @@ You can check out our example application for Laravel 5.0 and Laravel 4 built us
 
 ```
 "require": {
-    "get-stream/stream-laravel": "~2.2.6"
+    "get-stream/stream-laravel": "~2.3.2"
 },
 ```
 
