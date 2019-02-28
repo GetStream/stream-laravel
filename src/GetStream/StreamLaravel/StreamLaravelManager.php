@@ -4,6 +4,7 @@ namespace GetStream\StreamLaravel;
 
 use Exception;
 use GetStream\Stream\Client;
+use GetStream\Stream\Feed;
 
 class StreamLaravelManager
 {
@@ -89,8 +90,9 @@ class StreamLaravelManager
         $news_feeds = $this->getNewsFeeds($user_id);
         $target_feed = $this->getUserFeed($target_user_id);
 
+        /** @var Feed $feed */
         foreach ($news_feeds as $feed) {
-            $feed->followFeed($target_feed->getSlug(), $target_feed->getUserId());
+            $feed->follow($target_feed->getSlug(), $target_feed->getUserId());
         }
     }
 
