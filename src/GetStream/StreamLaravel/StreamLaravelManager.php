@@ -106,7 +106,7 @@ class StreamLaravelManager
         $target_feed = $this->getUserFeed($target_user_id);
 
         foreach ($news_feeds as $feed) {
-            $feed->unfollowFeed($target_feed->getSlug(), $target_feed->getUserId());
+            $feed->unfollow($target_feed->getSlug(), $target_feed->getUserId());
         }
     }
 
