@@ -20,7 +20,12 @@ class Enrich
         $results = [];
         $pkName = (new $model())->getKeyName();
         $query = $model::with($with)->whereIn($pkName, $ids);
-        if (in_array('Illuminate\Database\Eloquent\SoftDeletes', class_uses(get_class($model))) && $this->withTrashed) // previous withTrash method deprecated in Laravel 4.2
+        $softDeleteTraits = [
+            'Illuminate\Database\Eloquent\SoftDeletes',
+            'Illuminate\Database\Eloquent\SoftDeletingTrait'
+        ];
+
+        if ((bool)array_intersect($softDeleteTraits, class_uses(get_class($model))) && $this->withTrashed) // previous withTrash method deprecated in Laravel 4.2
             $query = $query->withTrashed();
         $objects = $query->get();
         foreach ($objects as $object) {
