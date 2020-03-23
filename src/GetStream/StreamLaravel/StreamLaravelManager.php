@@ -123,14 +123,14 @@ class StreamLaravelManager
     public function activityCreated($instance)
     {
         $activity = $instance->createActivity();
-        $feed = $this->getFeed($this->userFeed, $instance->activityActorId());
+        $feed = $this->getFeed($instance->activityActorMethodName(), $instance->activityActorId());
         $feed->addActivity($activity);
     }
 
     public function activityDeleted($instance)
     {
         $foreignId = $instance->activityForeignId();
-        $feed = $this->getFeed($this->userFeed, $instance->activityActorId());
+        $feed = $this->getFeed($instance->activityActorMethodName(), $instance->activityActorId());
         $feed->removeActivity($foreignId, true);
     }
 }
