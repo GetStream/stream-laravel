@@ -11,7 +11,7 @@
         }
     ],
     "require": {
-        "php": ">=5.5.0",
+        "php": ">=7.2.0",
         "illuminate/support": ">=4.2",
         "illuminate/database": ">=4.2",
         "get-stream/stream": "^4.0.1"
