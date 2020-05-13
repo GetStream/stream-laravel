@@ -59,12 +59,12 @@ class StreamLumenServiceProvider extends ServiceProvider
         if (file_exists($userConfigFile)) {
             $userConfig = $this->app['files']->getRequire($userConfigFile);
             $config = array_replace_recursive($config, $userConfig);
-        }
-
-        $namespace = 'stream-laravel::';
-
-        foreach($config as $key => $value) {
-            $this->app['config']->set($namespace . $key , $value);
+        } else {
+            //only set if we dont have a config file for stream-laravel
+            $namespace = 'stream-laravel.';
+            foreach($config as $key => $value) {
+                $this->app['config']->set($namespace . $key , $value);
+            }
         }
     }
 }
