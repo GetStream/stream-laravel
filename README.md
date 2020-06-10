@@ -422,14 +422,14 @@ For convenience we includes a basic view:
     <div class="container">
         <div class="container-pins">
             @foreach ($activities as $activity)
-                @include('stream-laravel::render_activity', ['activity' => $activity])
+                @include('stream-laravel.render_activity', ['activity' => $activity])
             @endforeach
         </div>
     </div>
 @stop
 ```
 
-The ```stream-laravel::render_activity``` view tag will render the view activity.$activity["verb"] view with the activity as context.
+The ```stream-laravel.render_activity``` view tag will render the view activity.$activity["verb"] view with the activity as context.
 
 For example activity/tweet.blade.php will be used to render an normal activity with verb tweet and aggregated_activity/like.blade.php for an aggregated activity with verb like
 
@@ -437,7 +437,7 @@ If you need to support different kind of templates for the same activity, you ca
 
 The example below will use the view activity/homepage_like.html
 ```
-@include('stream-laravel::render_activity', ['activity' => $activity, 'prefix' => 'homepage'])
+@include('stream-laravel.render_activity', ['activity' => $activity, 'prefix' => 'homepage'])
 ```
 
 

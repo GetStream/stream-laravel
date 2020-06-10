@@ -9,15 +9,15 @@ class ManagerTest extends PHPUnit_Framework_TestCase
     {
         parent::setUp();
         $config = m::mock('ConfigMock');
-        $config->shouldReceive('get')->once()->with('stream-laravel::user_feed')
+        $config->shouldReceive('get')->once()->with('stream-laravel.user_feed')
             ->andReturn('user');
-        $config->shouldReceive('get')->once()->with('stream-laravel::notification_feed')
+        $config->shouldReceive('get')->once()->with('stream-laravel.notification_feed')
             ->andReturn('notification');
-        $config->shouldReceive('get')->once()->with('stream-laravel::location')
+        $config->shouldReceive('get')->once()->with('stream-laravel.location')
             ->andReturn('');
-        $config->shouldReceive('get')->once()->with('stream-laravel::news_feeds')
+        $config->shouldReceive('get')->once()->with('stream-laravel.news_feeds')
             ->andReturn(array('flat'=>'flat', 'aggregated'=>'aggregated'));
-        $config->shouldReceive('get')->once()->with('stream-laravel::timeout', 3)
+        $config->shouldReceive('get')->once()->with('stream-laravel.timeout', 3)
             ->andReturn(3);
         $this->manager = new StreamLaravelManager('key', 'secret', $config);
     }
@@ -32,15 +32,15 @@ class ManagerTest extends PHPUnit_Framework_TestCase
     {
         parent::setUp();
         $config = m::mock('ConfigMock');
-        $config->shouldReceive('get')->once()->with('stream-laravel::user_feed')
+        $config->shouldReceive('get')->once()->with('stream-laravel.user_feed')
             ->andReturn('user');
-        $config->shouldReceive('get')->once()->with('stream-laravel::notification_feed')
+        $config->shouldReceive('get')->once()->with('stream-laravel.notification_feed')
             ->andReturn('notification');
-        $config->shouldReceive('get')->once()->with('stream-laravel::location')
+        $config->shouldReceive('get')->once()->with('stream-laravel.location')
             ->andReturn('');
-        $config->shouldReceive('get')->once()->with('stream-laravel::news_feeds')
+        $config->shouldReceive('get')->once()->with('stream-laravel.news_feeds')
             ->andReturn(array('flat'=>'flat', 'aggregated'=>'aggregated'));
-        $config->shouldReceive('get')->once()->with('stream-laravel::timeout', 3)
+        $config->shouldReceive('get')->once()->with('stream-laravel.timeout', 3)
             ->andReturn(6);
         $manager = new StreamLaravelManager('key', 'secret', $config);
 
