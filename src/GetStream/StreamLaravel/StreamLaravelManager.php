@@ -38,11 +38,11 @@ class StreamLaravelManager
             $this->client = Client::herokuConnect(getenv('STREAM_URL'));
         } else {
             $this->client = new Client($api_key, $api_secret);
-            $location = $this->config->get("stream-laravel::location");
+            $location = $this->config->get("stream-laravel.location");
             $this->client->setLocation($location);
-            $this->client->timeout = $this->config->get("stream-laravel::timeout", 3);
+            $this->client->timeout = $this->config->get("stream-laravel.timeout", 3);
         }
-        $this->userFeed = $this->config->get("stream-laravel::user_feed");
+        $this->userFeed = $this->config->get("stream-laravel.user_feed");
     }
 
     /**
@@ -62,7 +62,7 @@ class StreamLaravelManager
      */
     public function getNotificationFeed($user_id)
     {
-        $user_feed = $this->config->get("stream-laravel::notification_feed");
+        $user_feed = $this->config->get("stream-laravel.notification_feed");
         return $this->client->feed($user_feed, $user_id);
     }
 
@@ -74,7 +74,7 @@ class StreamLaravelManager
     public function getNewsFeeds($user_id)
     {
         $feeds = [];
-        $news_feeds = $this->config->get("stream-laravel::news_feeds");
+        $news_feeds = $this->config->get("stream-laravel.news_feeds");
         foreach ($news_feeds as $feed) {
             $feeds[$feed] = $this->client->feed($feed, $user_id);
         }
