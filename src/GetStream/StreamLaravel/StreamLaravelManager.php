@@ -124,7 +124,7 @@ class StreamLaravelManager
     {
         $activity = $instance->createActivity();
         $feed = $this->getFeed($this->userFeed, $instance->activityActorId());
-        $feed->addActivity($activity);
+        return $feed->addActivity($activity);
     }
 
     public function activityDeleted($instance)
