@@ -52,7 +52,7 @@ class StreamLumenServiceProvider extends ServiceProvider
      */
     protected function registerResources()
     {
-        $userConfigFile = app()->configure('stream-laravel.php');
+        $userConfigFile = app()->getConfigurationPath('stream-laravel.php');
         $packageConfigFile = __DIR__.'/../../config/config.php';
         $config = $this->app['files']->getRequire($packageConfigFile);
 
