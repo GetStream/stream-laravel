@@ -491,8 +491,19 @@ $specialFeed = FeedManager::getClient->feed('special', '42')
 $specialFeed->followFeed('timeline', '60')
 ```
 
+### Contributing
+
+We welcome code changes that improve this library or fix a problem, please make sure to follow all best practices and add tests if applicable before submitting a Pull Request on Github. We are very happy to merge your code in the official repository. Make sure to sign our [Contributor License Agreement (CLA)](https://docs.google.com/forms/d/e/1FAIpQLScFKsKkAJI7mhCr7K9rEIOpqIDThrWxuvxnwUq2XkHyG154vQ/viewform) first. See our license file for more details.
+
+Getting started:
+
+```shell
+$ composer install
+$ ./vendor/bin/phpunit
+```
+
 ### Copyright and License Information
 
-Copyright (c) 2014-2019 Stream.io Inc, and individual contributors. All rights reserved.
+Copyright (c) 2014-2022 Stream.io Inc, and individual contributors. All rights reserved.
 
 See the file "LICENSE" for information on the history of this software, terms & conditions for usage, and a DISCLAIMER OF ALL WARRANTIES.

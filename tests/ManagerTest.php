@@ -1,11 +1,12 @@
 <?php
 
+use PHPUnit\Framework\TestCase;
 use GetStream\StreamLaravel\StreamLaravelManager;
 use Mockery as m;
 
-class ManagerTest extends PHPUnit_Framework_TestCase
+class ManagerTest extends TestCase
 {
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $config = m::mock('ConfigMock');
@@ -16,7 +17,7 @@ class ManagerTest extends PHPUnit_Framework_TestCase
         $config->shouldReceive('get')->once()->with('stream-laravel.location')
             ->andReturn('');
         $config->shouldReceive('get')->once()->with('stream-laravel.news_feeds')
-            ->andReturn(array('flat'=>'flat', 'aggregated'=>'aggregated'));
+            ->andReturn(array('flat' => 'flat', 'aggregated' => 'aggregated'));
         $config->shouldReceive('get')->once()->with('stream-laravel.timeout', 3)
             ->andReturn(3);
         $this->manager = new StreamLaravelManager('key', 'secret', $config);
@@ -39,7 +40,7 @@ class ManagerTest extends PHPUnit_Framework_TestCase
         $config->shouldReceive('get')->once()->with('stream-laravel.location')
             ->andReturn('');
         $config->shouldReceive('get')->once()->with('stream-laravel.news_feeds')
-            ->andReturn(array('flat'=>'flat', 'aggregated'=>'aggregated'));
+            ->andReturn(array('flat' => 'flat', 'aggregated' => 'aggregated'));
         $config->shouldReceive('get')->once()->with('stream-laravel.timeout', 3)
             ->andReturn(6);
         $manager = new StreamLaravelManager('key', 'secret', $config);
@@ -68,25 +69,9 @@ class ManagerTest extends PHPUnit_Framework_TestCase
         $this->assertSame($feeds['flat']->getId(), 'flat:42');
     }
 
-    public function testFollowUser()
-    {
-    }
-
-    public function testUnfollowUser()
-    {
-    }
-
     public function testGetFeed()
     {
         $feed = $this->manager->getFeed('myfeed', 42);
         $this->assertSame($feed->getId(), 'myfeed:42');
-    }
-
-    public function testActivityCreated()
-    {
-    }
-
-    public function testActivityDeleted()
-    {
     }
 }

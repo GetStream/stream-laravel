@@ -1,8 +1,9 @@
 <?php
 
+use PHPUnit\Framework\TestCase;
 use GetStream\StreamLaravel\EnrichedActivity;
 
-class EnrichedActivityTest extends \PHPUnit_Framework_TestCase
+class EnrichedActivityTest extends TestCase
 {
     public function testArrayImplementation()
     {
@@ -29,7 +30,7 @@ class EnrichedActivityTest extends \PHPUnit_Framework_TestCase
 
     public function testIterable()
     {
-        $activity = new EnrichedActivity(array('1'=>1, '2'=> 3));
+        $activity = new EnrichedActivity(array('1' => 1, '2' => 3));
         $sum = 0;
         foreach ($activity as $field => $value) {
             $sum += $value;

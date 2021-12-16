@@ -1,13 +1,19 @@
 <?php
 
+use PHPUnit\Framework\TestCase;
+use GetStream\Stream\Client;
 use GetStream\StreamLaravel\Eloquent\Activity;
-use GetStream\Stream\Feed;
 
 class _Activity extends Activity
 {
     public $author = null;
     public $created_at = null;
     public $id = 42;
+
+    public function __construct()
+    {
+        $this->client = new Client(null, null);
+    }
     public function getKey()
     {
         return $this->id;
@@ -18,13 +24,13 @@ class _Activity extends Activity
     }
     public function activityNotify()
     {
-        return array(new Feed(null, 'feed', '1', 'token', null));
+        return array($this->client->feed('feed', '1'));
     }
 }
 
-class ActivityTest extends \PHPUnit_Framework_TestCase
+class ActivityTest extends TestCase
 {
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $this->instance = new _Activity;
