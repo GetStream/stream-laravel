@@ -1,0 +1,30 @@
+name: CI
+
+on: [pull_request]
+
+concurrency: 
+  group: ${{ github.workflow }}-${{ github.head_ref }}
+  cancel-in-progress: true
+
+jobs:
+  basic:
+    name: Run tests on PHP ${{ matrix.php_version }}
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        php_version: ['7.3' ,'7.4', '8.1']
+      fail-fast: false
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php_version }}
+          tools: composer
+
+      - name: Install dependencies
+        run: composer install
+
+      - name: Run tests
+        run: ./vendor/bin/phpunit
