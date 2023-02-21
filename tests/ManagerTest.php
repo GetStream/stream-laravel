@@ -6,6 +6,8 @@ use Mockery as m;
 
 class ManagerTest extends TestCase
 {
+    private $manager = null;
+
     public function setUp(): void
     {
         parent::setUp();
