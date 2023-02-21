@@ -3,3 +3,5 @@
 .phpunit.result.cache
 .vscode
 .devcontainer
+Dockerfile
+Makefile
