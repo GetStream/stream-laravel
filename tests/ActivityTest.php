@@ -30,6 +30,9 @@ class _Activity extends Activity
 
 class ActivityTest extends TestCase
 {
+
+    private $instance = null;
+
     public function setUp(): void
     {
         parent::setUp();
