@@ -32,7 +32,7 @@ class EnrichedActivity implements ArrayAccess, IteratorAggregate
     }
 
     // Array implementation methods
-    public function offsetSet($offset, $value)
+    public function offsetSet($offset, $value): void
     {
         if (is_null($offset)) {
             $this->activityData[] = $value;
@@ -41,23 +41,23 @@ class EnrichedActivity implements ArrayAccess, IteratorAggregate
         }
     }
 
-    public function offsetExists($offset)
+    public function offsetExists($offset): bool
     {
         return isset($this->activityData[$offset]);
     }
 
-    public function offsetUnset($offset)
+    public function offsetUnset($offset): void
     {
         unset($this->activityData[$offset]);
     }
 
-    public function offsetGet($offset)
+    public function offsetGet($offset): mixed
     {
         return isset($this->activityData[$offset]) ? $this->activityData[$offset] : null;
     }
 
     // Support iteration over private activityData array
-    public function getIterator()
+    public function getIterator(): \Traversable
     {
         return new ArrayIterator($this->activityData);
     }

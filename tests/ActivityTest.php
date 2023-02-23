@@ -30,6 +30,9 @@ class _Activity extends Activity
 
 class ActivityTest extends TestCase
 {
+
+    private $instance = null;
+
     public function setUp(): void
     {
         parent::setUp();
@@ -47,10 +50,10 @@ class ActivityTest extends TestCase
         $this->assertSame($activity['object'], '_Activity:42');
         $this->assertSame($activity['foreign_id'], '_Activity:42');
     }
+    
     public function testToField()
     {
         $activity = $this->instance->createActivity();
-        print_r($activity['to']);
         $this->assertSame($activity['to'], array('feed:1'));
     }
 }
