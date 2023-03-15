@@ -15,16 +15,20 @@ jobs:
         php_version: ['8.0', '8.1', '8.2']
       fail-fast: false
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: ${{ matrix.php_version }}
-          tools: composer
+          php-version: ${{ matrix.php-versions }}
+          tools: composer:v2
 
-      - name: Install dependencies
-        run: composer install
+      - name: Deps
+        run: composer install --no-interaction
 
-      - name: Run tests
-        run: ./vendor/bin/phpunit
+      - name: Quality
+        if: matrix.php-versions == '8.0'
+        run: vendor/bin/php-cs-fixer fix --config=.php-cs-fixer.dist.php -v --dry-run --stop-on-violation
+
+      - name: Test
+        run: vendor/bin/phpunit
