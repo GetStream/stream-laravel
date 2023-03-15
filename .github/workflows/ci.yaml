@@ -11,8 +11,8 @@ jobs:
     name: Run tests on PHP ${{ matrix.php-versions }}
     runs-on: ubuntu-latest
     strategy:
+      max-parallel: 1
       matrix:
-        max-parallel: 1
         php-versions: ['8.0', '8.1', '8.2']
     steps:
       - uses: actions/checkout@v3
