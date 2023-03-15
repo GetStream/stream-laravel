@@ -61,8 +61,8 @@ class StreamLaravelServiceProvider extends ServiceProvider
         } else {
             //only set if we dont have a config file for stream-laravel
             $namespace = 'stream-laravel.';
-            foreach($config as $key => $value) {
-                $this->app['config']->set($namespace . $key , $value);
+            foreach ($config as $key => $value) {
+                $this->app['config']->set($namespace . $key, $value);
             }
         }
     }

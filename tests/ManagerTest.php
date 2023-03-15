@@ -19,7 +19,7 @@ class ManagerTest extends TestCase
         $config->shouldReceive('get')->once()->with('stream-laravel.location')
             ->andReturn('');
         $config->shouldReceive('get')->once()->with('stream-laravel.news_feeds')
-            ->andReturn(array('flat' => 'flat', 'aggregated' => 'aggregated'));
+            ->andReturn(['flat' => 'flat', 'aggregated' => 'aggregated']);
         $config->shouldReceive('get')->once()->with('stream-laravel.timeout', 3)
             ->andReturn(3);
         $this->manager = new StreamLaravelManager('key', 'secret', $config);
@@ -42,7 +42,7 @@ class ManagerTest extends TestCase
         $config->shouldReceive('get')->once()->with('stream-laravel.location')
             ->andReturn('');
         $config->shouldReceive('get')->once()->with('stream-laravel.news_feeds')
-            ->andReturn(array('flat' => 'flat', 'aggregated' => 'aggregated'));
+            ->andReturn(['flat' => 'flat', 'aggregated' => 'aggregated']);
         $config->shouldReceive('get')->once()->with('stream-laravel.timeout', 3)
             ->andReturn(6);
         $manager = new StreamLaravelManager('key', 'secret', $config);

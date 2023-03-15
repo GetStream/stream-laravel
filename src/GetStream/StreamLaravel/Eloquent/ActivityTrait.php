@@ -135,19 +135,16 @@ trait ActivityTrait
 
         $to = $this->activityNotify();
 
-        if ( $to !== null )
-        {
+        if ($to !== null) {
             $activity['to'] = [];
-            foreach ( $to as $feed )
-            {
+            foreach ($to as $feed) {
                 $activity['to'][] = $feed->getId();
             }
         }
 
         $extra_data = $this->activityExtraData();
 
-        if ( $extra_data !== null )
-        {
+        if ($extra_data !== null) {
             $activity = array_merge($activity, $extra_data);
         }
 

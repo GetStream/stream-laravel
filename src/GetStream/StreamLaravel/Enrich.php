@@ -25,8 +25,9 @@ class Enrich
             'Illuminate\Database\Eloquent\SoftDeletingTrait'
         ];
 
-        if ((bool)array_intersect($softDeleteTraits, class_uses(get_class($model))) && $this->withTrashed) // previous withTrash method deprecated in Laravel 4.2
+        if ((bool)array_intersect($softDeleteTraits, class_uses(get_class($model))) && $this->withTrashed) { // previous withTrash method deprecated in Laravel 4.2
             $query = $query->withTrashed();
+        }
         $objects = $query->get();
         foreach ($objects as $object) {
             $results[$object->getKey()] = $object; // support for non-default UUID keys
@@ -80,8 +81,9 @@ class Enrich
     {
         foreach ($activities as $key => $activity) {
             foreach ($this->fields as $field) {
-                if (!isset($activity[$field]))
+                if (!isset($activity[$field])) {
                     continue;
+                }
                 $value = $activity[$field];
                 $reference = explode(':', $value);
                 if (!array_key_exists($reference[0], $objects)) {
