@@ -24,13 +24,12 @@ class _Activity extends Activity
     }
     public function activityNotify()
     {
-        return array($this->client->feed('feed', '1'));
+        return [$this->client->feed('feed', '1')];
     }
 }
 
 class ActivityTest extends TestCase
 {
-
     private $instance = null;
 
     public function setUp(): void
@@ -54,6 +53,6 @@ class ActivityTest extends TestCase
     public function testToField()
     {
         $activity = $this->instance->createActivity();
-        $this->assertSame($activity['to'], array('feed:1'));
+        $this->assertSame($activity['to'], ['feed:1']);
     }
 }

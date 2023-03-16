@@ -36,7 +36,7 @@ class StreamLumenServiceProvider extends ServiceProvider
             $this->registerResources();
         }
 
-        $this->app->singleton('feed_manager', function($app) {
+        $this->app->singleton('feed_manager', function ($app) {
             $manager_class = config('stream-laravel.feed_manager_class');
             $api_key = config('stream-laravel.api_key');
             $api_secret = config('stream-laravel.api_secret');
@@ -62,8 +62,8 @@ class StreamLumenServiceProvider extends ServiceProvider
         } else {
             //only set if we dont have a config file for stream-laravel
             $namespace = 'stream-laravel.';
-            foreach($config as $key => $value) {
-                $this->app['config']->set($namespace . $key , $value);
+            foreach ($config as $key => $value) {
+                $this->app['config']->set($namespace . $key, $value);
             }
         }
     }
