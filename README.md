@@ -1,3 +1,5 @@
+> **`stream-laravel` is no longer maintained and is archived.** It integrated Feeds v2 with Laravel. New projects should use Feeds v3 with [`getstream-php`](https://github.com/GetStream/getstream-php) (Composer `getstream/getstream-php`). Migration guide: https://getstream.io/activity-feeds/docs/php/v2-to-v3-migration/
+
 # Stream Laravel
 [![Build Status](https://travis-ci.org/GetStream/stream-laravel.svg?branch=master)](https://travis-ci.org/GetStream/stream-laravel) [![PHP version](https://badge.fury.io/ph/get-stream%2Fstream-laravel.svg)](http://badge.fury.io/ph/get-stream%2Fstream-laravel)
 
